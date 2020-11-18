@@ -6,7 +6,6 @@ import miniplc0java.util.Pos;
 
 /*
 gradle fatjar
-
 java -jar ./build/libs/miniplc0java.jar -t -o output.txt input.txt
  */
 
@@ -187,7 +186,7 @@ public class Tokenizer {
             it.nextChar();
         }
 
-        while (Character.isLetter(it.peekChar()) || Character.isDigit(it.peekChar())) {
+        while (Character.isLetter(it.peekChar()) || Character.isDigit(it.peekChar()) || it.peekChar() == '_') {
             cache.append(it.peekChar());
             it.nextChar();
         }
