@@ -45,6 +45,9 @@ public enum TokenType {
     COLON,
     SEMICOLON,
 
+    //注释
+    COMMENT,
+
     // miniplc0
     /** 空 */
     None,
@@ -130,6 +133,10 @@ public enum TokenType {
                 return ":";
             case SEMICOLON:
                 return ";";
+
+            //注释
+            case COMMENT:
+                return "Comment";
 
             //plc0
             case None:

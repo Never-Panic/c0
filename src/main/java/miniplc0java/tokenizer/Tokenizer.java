@@ -4,6 +4,12 @@ import miniplc0java.error.TokenizeError;
 import miniplc0java.error.ErrorCode;
 import miniplc0java.util.Pos;
 
+/*
+gradle fatjar
+
+java -jar ./build/libs/miniplc0java.jar -t -o output.txt input.txt
+ */
+
 public class Tokenizer {
 
     private StringIter it;
@@ -34,9 +40,96 @@ public class Tokenizer {
             return lexNum();
         } else if (Character.isAlphabetic(peek) || peek=='_') {
             return lexIdentOrKeyword();
-        } else {
-            return lexOperatorOrUnknown();
+        } else if (peek == '\"') {
+            return lexString();
+        } else if (peek == '\'') {
+            return lexChar();
+        } else return lexOperatorOrUnknown();
+
+    }
+
+    private Token lexChar() throws TokenizeError {
+        char out;
+        Pos startPos = it.ptr;
+
+        it.nextChar();//read the first '
+
+        if (it.peekChar() == '\\') {
+            it.nextChar();
+
+            char peek = it.peekChar();
+            if (peek=='\\') {
+                out = '\\';
+                it.nextChar();
+            } else if (peek=='\"') {
+                out = '\"';
+                it.nextChar();
+            } else if (peek=='\'') {
+                out = '\'';
+                it.nextChar();
+            } else if (peek=='n') {
+                out = '\n';
+                it.nextChar();
+            } else if (peek=='t') {
+                out = '\t';
+                it.nextChar();
+            } else if (peek=='r') {
+                out = '\r';
+                it.nextChar();
+            } else throw new TokenizeError(ErrorCode.InvalidInput, it.previousPos());
+        } else if (!(it.peekChar()=='\r'||it.peekChar()=='\t'||it.peekChar()=='\n'||it.peekChar()=='\'')) {
+            out = it.peekChar();
+            it.nextChar();
+        } else throw new TokenizeError(ErrorCode.InvalidInput, it.previousPos());  // 是\r \t \n '
+
+        if (it.peekChar()!='\'') throw new TokenizeError(ErrorCode.InvalidInput, it.previousPos());
+        it.nextChar();//read the last '
+
+        return new Token(TokenType.CHAR_LITERAL, out, startPos, it.ptr);
+    }
+
+    private Token lexString() throws TokenizeError {
+        // 可以为空字符串
+        StringBuilder cache = new StringBuilder();
+        Pos startPos = it.ptr;
+
+        it.nextChar();//read the first "
+
+        while (it.peekChar() != '\"') {
+
+            if (it.peekChar() == '\\') {
+                it.nextChar();
+                char peek = it.peekChar();
+
+                if (peek=='\\') {
+                    cache.append('\\');
+                    it.nextChar();
+                } else if (peek=='\"') {
+                    cache.append('\"');
+                    it.nextChar();
+                } else if (peek=='\'') {
+                    cache.append('\'');
+                    it.nextChar();
+                } else if (peek=='n') {
+                    cache.append('\n');
+                    it.nextChar();
+                } else if (peek=='t') {
+                    cache.append('\t');
+                    it.nextChar();
+                } else if (peek=='r') {
+                    cache.append('\r');
+                    it.nextChar();
+                } else throw new TokenizeError(ErrorCode.InvalidInput, it.previousPos());
+            } else if (!(it.peekChar()=='\r'||it.peekChar()=='\t'||it.peekChar()=='\n')){
+                cache.append(it.peekChar());
+                it.nextChar();
+            }
+            else throw new TokenizeError(ErrorCode.InvalidInput, it.previousPos());  // 是\r \t \n
         }
+
+        if (it.peekChar()!='\"') throw new TokenizeError(ErrorCode.InvalidInput, it.previousPos());
+        it.nextChar();//read the last "
+        return new Token(TokenType.STRING_LITERAL, cache.toString(), startPos, it.ptr);
     }
 
     private Token lexNum() throws TokenizeError {

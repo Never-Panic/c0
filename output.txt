@@ -1,3 +1,16 @@
-Line: 0 Column: 0 Type: Double Value: 11.0
-Line: 1 Column: 0 Type: Double Value: 12322.3
-Line: 2 Column: 0 Type: Double Value: 233.1
+Line: 0 Column: 0 Type: Identifier Value: fnwhile
+Line: 0 Column: 8 Type: fn Value: fn
+Line: 0 Column: 11 Type: while Value: while
+Line: 0 Column: 17 Type: UnsignedInteger Value: 312
+Line: 0 Column: 21 Type: Double Value: 123.23
+Line: 0 Column: 28 Type: Double Value: 23.2
+Line: 0 Column: 34 Type: + Value: +
+Line: 0 Column: 35 Type: - Value: -
+Line: 0 Column: 36 Type: = Value: =
+Line: 0 Column: 37 Type: / Value: /
+Line: 0 Column: 38 Type: String Value: asd
+Line: 0 Column: 43 Type: Char Value: '
+Line: 0 Column: 47 Type: String Value: """
+Line: 0 Column: 55 Type: -> Value: ->
+Line: 0 Column: 57 Type: { Value: {
+Line: 0 Column: 59 Type: String Value: 2 2 2 2
