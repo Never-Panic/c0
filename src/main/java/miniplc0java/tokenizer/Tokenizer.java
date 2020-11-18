@@ -22,7 +22,6 @@ public class Tokenizer {
     /**
      * 获取下一个 Token
      * 
-     * @return
      * @throws TokenizeError 如果解析有异常则抛出
      */
     public Token nextToken() throws TokenizeError {
@@ -44,7 +43,7 @@ public class Tokenizer {
             return lexString();
         } else if (peek == '\'') {
             return lexChar();
-        } else return lexOperatorOrUnknown();
+        } else return lexOperator_Comment_Unknown();
 
     }
 
@@ -178,7 +177,7 @@ public class Tokenizer {
 
     }
 
-    private Token lexIdentOrKeyword() throws TokenizeError {
+    private Token lexIdentOrKeyword() {
 
         StringBuilder cache = new StringBuilder();
         Pos startPos = it.ptr;
@@ -196,33 +195,34 @@ public class Tokenizer {
         Pos endPos = it.ptr;
         String str = cache.toString();
 
-        if (str.equals("fn")) {
-            return new Token(TokenType.FN_KW, str, startPos, endPos);
-        } else if (str.equals("let")) {
-            return new Token(TokenType.LET_KW, str, startPos, endPos);
-        } else if (str.equals("const")) {
-            return new Token(TokenType.CONST_KW, str, startPos, endPos);
-        } else if (str.equals("as")) {
-            return new Token(TokenType.AS_KW, str, startPos, endPos);
-        } else if (str.equals("while")) {
-            return new Token(TokenType.WHILE_KW, str, startPos, endPos);
-        } else if (str.equals("if")) {
-            return new Token(TokenType.IF_KW, str, startPos, endPos);
-        } else if (str.equals("else")) {
-            return new Token(TokenType.ELSE_KW, str, startPos, endPos);
-        } else if (str.equals("return")) {
-            return new Token(TokenType.RETURN_KW, str, startPos, endPos);
-        } else if (str.equals("break")) {
-            return new Token(TokenType.BREAK_KW, str, startPos, endPos);
-        } else if (str.equals("continue")) {
-            return new Token(TokenType.CONTINUE_KW, str, startPos, endPos);
-        } else {
-            return new Token(TokenType.IDENT, str, startPos, endPos);
+        switch (str) {
+            case "fn":
+                return new Token(TokenType.FN_KW, str, startPos, endPos);
+            case "let":
+                return new Token(TokenType.LET_KW, str, startPos, endPos);
+            case "const":
+                return new Token(TokenType.CONST_KW, str, startPos, endPos);
+            case "as":
+                return new Token(TokenType.AS_KW, str, startPos, endPos);
+            case "while":
+                return new Token(TokenType.WHILE_KW, str, startPos, endPos);
+            case "if":
+                return new Token(TokenType.IF_KW, str, startPos, endPos);
+            case "else":
+                return new Token(TokenType.ELSE_KW, str, startPos, endPos);
+            case "return":
+                return new Token(TokenType.RETURN_KW, str, startPos, endPos);
+            case "break":
+                return new Token(TokenType.BREAK_KW, str, startPos, endPos);
+            case "continue":
+                return new Token(TokenType.CONTINUE_KW, str, startPos, endPos);
+            default:
+                return new Token(TokenType.IDENT, str, startPos, endPos);
         }
 
     }
 
-    private Token lexOperatorOrUnknown() throws TokenizeError {
+    private Token lexOperator_Comment_Unknown() throws TokenizeError {
 
         Pos startPos = it.currentPos();
         switch (it.nextChar()) {
@@ -239,7 +239,13 @@ public class Tokenizer {
                 return new Token(TokenType.MUL, '*', it.previousPos(), it.currentPos());
 
             case '/':
-                return new Token(TokenType.DIV, '/', it.previousPos(), it.currentPos());
+                // TODO: 注释不应该被词法分析输出
+                if (it.peekChar() == '/') {
+                    it.nextChar();
+                    while (it.peekChar()!='\n') it.nextChar();
+                    it.nextChar();// 读取\n
+                    return new Token(TokenType.COMMENT, "Comment", startPos, it.currentPos());
+                } else return new Token(TokenType.DIV, '/', it.previousPos(), it.currentPos());
 
             case '=':
                 if (it.peekChar() == '=') {
