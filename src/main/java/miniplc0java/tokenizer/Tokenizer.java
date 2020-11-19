@@ -154,6 +154,15 @@ public class Tokenizer {
             if (it.peekChar() == 'E' || it.peekChar() == 'e') {
                 it.nextChar();
 
+                boolean isPositive = true;
+
+                if (it.peekChar() == '+') {
+                    it.nextChar();
+                } else if (it.peekChar() == '-') {
+                    isPositive = false;
+                    it.nextChar();
+                }
+
                 if (!Character.isDigit(it.peekChar())) throw new TokenizeError(ErrorCode.InvalidInput, it.previousPos());
 
                 StringBuilder powCache = new StringBuilder();
@@ -164,6 +173,7 @@ public class Tokenizer {
 
                 double base = Double.parseDouble(cache.toString());
                 int powNum = Integer.parseInt(powCache.toString());
+                if (!isPositive) powNum = -powNum;
                 double result = base * Math.pow(10, powNum);
 
                 return new Token(TokenType.DOUBLE_LITERAL, result, startPos, it.ptr);

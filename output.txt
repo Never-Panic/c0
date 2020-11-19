@@ -1,1 +1,1 @@
-Line: 0 Column: 0 Type: Identifier Value: _das120_32
+Line: 0 Column: 0 Type: Double Value: 12323.0

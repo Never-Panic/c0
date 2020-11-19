@@ -1,3 +1,7 @@
-# miniplc0-java
+# c0-java
 
-这里是 miniplc0 实验的 Java 版本。
+由Java版本的miniplc0修改成的c0编译器
+
+                            BUAA
+                            刘坤昊
+                            18373026
