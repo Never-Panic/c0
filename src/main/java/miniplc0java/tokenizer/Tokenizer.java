@@ -248,12 +248,11 @@ public class Tokenizer {
                 return new Token(TokenType.MUL, '*', it.previousPos(), it.currentPos());
 
             case '/':
-                // TODO: 注释不应该被词法分析输出
                 if (it.peekChar() == '/') {
                     it.nextChar();
                     while (it.peekChar()!='\n') it.nextChar();
                     it.nextChar();// 读取\n
-                    return new Token(TokenType.COMMENT, "Comment", startPos, it.currentPos());
+                    return nextToken();
                 } else return new Token(TokenType.DIV, '/', it.previousPos(), it.currentPos());
 
             case '=':
