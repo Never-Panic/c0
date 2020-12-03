@@ -13,6 +13,7 @@ public class Expr {
         this.analyser = analyser;
     }
 
+    // 只能分析一句
     public void AnalyseExpr () throws CompileError {
         OperatorAsExpr operatorAsExpr = new OperatorAsExpr(analyser);
         operatorAsExpr.AnalyseOperatorAsExpr();
