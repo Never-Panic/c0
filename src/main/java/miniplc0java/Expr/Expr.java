@@ -18,11 +18,15 @@ public class Expr {
         operatorAsExpr.AnalyseOperatorAsExpr();
     }
 
+    // TODO 赋值语句需要特殊处理（不能被使用）（利用 *属性* 文法）
     //分析不是OperatorExpr 和 AsExpr的表达式，以避免左递归
     public void AnalyseNotOperatorAsExpr() throws CompileError {
         NegateExpr negateExpr = new NegateExpr(analyser);
+        LiteralExpr literalExpr = new LiteralExpr(analyser);
+        GroupExpr groupExpr = new GroupExpr(analyser);
 
         if (analyser.peek().getTokenType() == TokenType.MINUS) negateExpr.AnalyseNegateExpr();
-        else System.out.println(analyser.next().getValue());
+        else if (analyser.peek().getTokenType() == TokenType.L_PAREN) groupExpr.AnalyseGroupExpr();
+        else literalExpr.AnalyseLiteralExpr();
     }
 }

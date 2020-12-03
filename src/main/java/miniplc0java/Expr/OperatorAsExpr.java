@@ -50,8 +50,8 @@ public class OperatorAsExpr extends Expr{
         // TODO  将print函数转换为添加命令
         if (t.getTokenType()==TokenType.MUL) System.out.println("MUL");
         else if (t.getTokenType()==TokenType.DIV) System.out.println("DIV");
-        else if (t.getTokenType()==TokenType.PLUS) System.out.println("PLUS");
-        else if (t.getTokenType()==TokenType.MINUS) System.out.println("MINUS");
+        else if (t.getTokenType()==TokenType.PLUS) System.out.println("ADD");
+        else if (t.getTokenType()==TokenType.MINUS) System.out.println("SUB");
         else if (t.getTokenType()==TokenType.GT) System.out.println("GT");
         else if (t.getTokenType()==TokenType.LT) System.out.println("LT");
         else if (t.getTokenType()==TokenType.GE) System.out.println("GE");
