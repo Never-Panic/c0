@@ -1,5 +1,6 @@
 package miniplc0java.analyser;
 
+import miniplc0java.Expr.Expr;
 import miniplc0java.error.AnalyzeError;
 import miniplc0java.error.CompileError;
 import miniplc0java.error.ErrorCode;
@@ -13,6 +14,10 @@ import miniplc0java.tokenizer.Tokenizer;
 import miniplc0java.util.Pos;
 
 import java.util.*;
+
+
+//gradle fatjar
+//java -jar ./build/libs/miniplc0java.jar -l -o output.txt input.txt
 
 public final class Analyser {
 
@@ -35,7 +40,13 @@ public final class Analyser {
 
     public List<Instruction> analyse() throws CompileError {
         // TODO analyse !!!!!!!!!!!
-       // analyseProgram();
+
+        //正在测试表达式
+        Expr expr = new Expr(this);
+        expr.AnalyseExpr();
+
+
+        // analyseProgram();
         return instructions;
     }
 

@@ -2,24 +2,19 @@ package miniplc0java.Expr;
 
 import miniplc0java.analyser.Analyser;
 import miniplc0java.error.AnalyzeError;
+import miniplc0java.error.CompileError;
 import miniplc0java.error.ErrorCode;
-import miniplc0java.error.TokenizeError;
 import miniplc0java.tokenizer.Token;
 import miniplc0java.tokenizer.TokenType;
 
-import java.awt.image.TileObserver;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
-public class OperatorExpr extends Expr{
+public class OperatorAsExpr extends Expr{
 
-
-    String type = "Operator Expr";
     Stack<Token> stack = new Stack<>();
 
-    //唯一的分析器
-    Analyser analyser;
     //运算符的优先级
     static Map<TokenType, Integer> precedence = new HashMap<>();
     static {
@@ -38,8 +33,8 @@ public class OperatorExpr extends Expr{
         precedence.put(TokenType.NEQ, 0);
     }
 
-    public OperatorExpr(Analyser analyser) {
-        this.analyser = analyser;
+    public OperatorAsExpr(Analyser analyser) {
+        super(analyser);
     }
 
     //移进函数
@@ -52,6 +47,7 @@ public class OperatorExpr extends Expr{
     private void parse () throws AnalyzeError {
         Token t = stack.pop();
 
+        // TODO  将print函数转换为添加命令
         if (t.getTokenType()==TokenType.MUL) System.out.println("MUL");
         else if (t.getTokenType()==TokenType.DIV) System.out.println("DIV");
         else if (t.getTokenType()==TokenType.PLUS) System.out.println("PLUS");
@@ -67,31 +63,49 @@ public class OperatorExpr extends Expr{
     }
 
     //分析函数
-    public void AnalyseOperatorExpr () throws TokenizeError, AnalyzeError {
+    public void AnalyseOperatorAsExpr () throws CompileError {
         //要避免左递归
-        Expr expr = new Expr();
-        expr.AnalyseNotOperatorExpr();//已经在栈上留了一个数据
+        AnalyseNotOperatorAsExpr();//已经在栈上留了一个数据
 
-        //至少要有一个双目运算符
-        if (!isBinary(analyser.peek())) throw new AnalyzeError(ErrorCode.InvalidInput, analyser.peek().getStartPos());
-        //第一个符号入栈
-        move(analyser.next());
+        while (isBinaryOrAs(analyser.peek())) {
+            // 因为as的优先级比任何双目运算符都要高，所以遇见as输出就完事了
+            // TODO 判断类型转换是否符合语义，并且浮点数的加减指令和整数不一样，之后再考虑吧
+            if (analyser.peek().getTokenType()==TokenType.AS_KW) {
+                analyser.next();
+                Token peek = analyser.peek();
+                if (peek.getTokenType()==TokenType.IDENT) {
+                    if (peek.getValue().equals("int")) {
+                        analyser.next();
+                        System.out.println("cast to int");
 
-        expr.AnalyseNotOperatorExpr();
+                    } else if (peek.getValue().equals("double")) {
+                        analyser.next();
+                        System.out.println("cast to double");
 
-        while (isBinary(analyser.peek())) {
+                    } else {
+                        System.out.println(peek.getValue());
+                        throw new AnalyzeError(ErrorCode.InvalidInput, analyser.peek().getStartPos());
+                    }
+
+                } else {
+                    throw new AnalyzeError(ErrorCode.InvalidInput, analyser.peek().getStartPos());
+                }
+                continue;
+            }
+
+            //不是as，是双目运算符
             if (stack.isEmpty()) {
                 move(analyser.next());
+                AnalyseNotOperatorAsExpr();
             } else {
                 //栈非空
-                if (precedence.get(stack.peek().getTokenType()) > precedence.get(analyser.peek().getTokenType())) {
+                if (precedence.get(stack.peek().getTokenType()) >= precedence.get(analyser.peek().getTokenType())) {
                     //进行规约，跳转到下一个循环
                     parse();
-                    continue;
                 } else {
                     //移进
                     move(analyser.next());
-                    expr.AnalyseNotOperatorExpr();
+                    AnalyseNotOperatorAsExpr();
                 }
             }
         }
@@ -100,11 +114,12 @@ public class OperatorExpr extends Expr{
 
     }
 
-    //判断是否为双目运算符
-    private boolean isBinary (Token t) {
+    //判断是否为双目运算符或者as
+    private boolean isBinaryOrAs (Token t) {
         TokenType type = t.getTokenType();
         if (type==TokenType.MUL || type==TokenType.DIV || type==TokenType.PLUS || type==TokenType.MINUS || type==TokenType.GT || type==TokenType.LT
                 || type==TokenType.GE || type==TokenType.LE || type==TokenType.EQ || type==TokenType.NEQ) return true;
+        if (type==TokenType.AS_KW) return true;
         return false;
     }
 
