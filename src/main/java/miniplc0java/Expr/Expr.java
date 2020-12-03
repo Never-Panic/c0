@@ -19,7 +19,7 @@ public class Expr {
         operatorAsExpr.AnalyseOperatorAsExpr();
     }
 
-    // TODO 赋值语句需要特殊处理（不能被使用）（利用 *属性* 文法）
+    // TODO 赋值语句需要特殊处理（不能被使用）（利用 *属性* 文法）  (属于语义分析的范畴)
     //分析不是OperatorExpr 和 AsExpr的表达式，以避免左递归
     public void AnalyseNotOperatorAsExpr() throws CompileError {
         NegateExpr negateExpr = new NegateExpr(analyser);

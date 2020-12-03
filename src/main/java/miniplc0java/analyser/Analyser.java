@@ -1,6 +1,7 @@
 package miniplc0java.analyser;
 
 import miniplc0java.Expr.Expr;
+import miniplc0java.SymbolTable.SymbolTable;
 import miniplc0java.error.AnalyzeError;
 import miniplc0java.error.CompileError;
 import miniplc0java.error.ErrorCode;
@@ -28,7 +29,7 @@ public final class Analyser {
     Token peekedToken = null;
 
     /** 符号表 */
-    HashMap<String, SymbolEntry> symbolTable = new HashMap<>();
+    SymbolTable symbolTable = SymbolTable.getInstance();
 
     /** 下一个变量的栈偏移 */
     int nextOffset = 0;
@@ -50,9 +51,10 @@ public final class Analyser {
         return instructions;
     }
 
+
     /**
      * 查看下一个 Token
-     * 
+     * next() 和 peek() 会返回同一个东西
      * @return
      * @throws TokenizeError
      */
@@ -109,7 +111,9 @@ public final class Analyser {
 
     /**
      * 如果下一个 token 的类型是 tt，则前进一个 token 并返回，否则抛出异常
-     * 
+     *
+     * 返回和next() peek()一样
+     *
      * @param tt 类型
      * @return 这个 token
      * @throws CompileError 如果类型不匹配
@@ -124,80 +128,89 @@ public final class Analyser {
     }
 
     /**
-     * 获取下一个变量的栈偏移
-     * 
-     * @return
+     * TODO 还要重新实现
+     * -------------------------------------------------------------------------------------------------------------------------
      */
-    private int getNextVariableOffset() {
-        return this.nextOffset++;
-    }
+//    /**
+//     * 获取下一个变量的栈偏移
+//     *
+//     * @return
+//     */
+//    private int getNextVariableOffset() {
+//        return this.nextOffset++;
+//    }
+//
+//    /**
+//     * 添加一个符号
+//     *
+//     * @param name          名字
+//     * @param isInitialized 是否已赋值
+//     * @param isConstant    是否是常量
+//     * @param curPos        当前 token 的位置（报错用）
+//     * @throws AnalyzeError 如果重复定义了则抛异常
+//     */
+//    private void addSymbol(String name, boolean isInitialized, boolean isConstant, Pos curPos) throws AnalyzeError {
+//        if (this.symbolTable.get(name) != null) {
+//            throw new AnalyzeError(ErrorCode.DuplicateDeclaration, curPos);
+//        } else {
+//            this.symbolTable.put(name, new SymbolEntry(isConstant, isInitialized, getNextVariableOffset()));
+//        }
+//    }
+//
+//    /**
+//     * 设置符号为已赋值
+//     *
+//     * @param name   符号名称
+//     * @param curPos 当前位置（报错用）
+//     * @throws AnalyzeError 如果未定义则抛异常
+//     */
+//    private void initializeSymbol(String name, Pos curPos) throws AnalyzeError {
+//        var entry = this.symbolTable.get(name);
+//        if (entry == null) {
+//            throw new AnalyzeError(ErrorCode.NotDeclared, curPos);
+//        } else {
+//            entry.setInitialized(true);
+//        }
+//    }
+//
+//    /**
+//     * 获取变量在栈上的偏移
+//     *
+//     * @param name   符号名
+//     * @param curPos 当前位置（报错用）
+//     * @return 栈偏移
+//     * @throws AnalyzeError
+//     */
+//    private int getOffset(String name, Pos curPos) throws AnalyzeError {
+//        var entry = this.symbolTable.get(name);
+//        if (entry == null) {
+//            throw new AnalyzeError(ErrorCode.NotDeclared, curPos);
+//        } else {
+//            return entry.getStackOffset();
+//        }
+//    }
+//
+//    /**
+//     * 获取变量是否是常量
+//     *
+//     * @param name   符号名
+//     * @param curPos 当前位置（报错用）
+//     * @return 是否为常量
+//     * @throws AnalyzeError
+//     */
+//    private boolean isConstant(String name, Pos curPos) throws AnalyzeError {
+//        var entry = this.symbolTable.get(name);
+//        if (entry == null) {
+//            throw new AnalyzeError(ErrorCode.NotDeclared, curPos);
+//        } else {
+//            return entry.isConstant();
+//        }
+//    }
 
     /**
-     * 添加一个符号
-     * 
-     * @param name          名字
-     * @param isInitialized 是否已赋值
-     * @param isConstant    是否是常量
-     * @param curPos        当前 token 的位置（报错用）
-     * @throws AnalyzeError 如果重复定义了则抛异常
+     * -------------------------------------------------------------------------------------------------------------------------
      */
-    private void addSymbol(String name, boolean isInitialized, boolean isConstant, Pos curPos) throws AnalyzeError {
-        if (this.symbolTable.get(name) != null) {
-            throw new AnalyzeError(ErrorCode.DuplicateDeclaration, curPos);
-        } else {
-            this.symbolTable.put(name, new SymbolEntry(isConstant, isInitialized, getNextVariableOffset()));
-        }
-    }
 
-    /**
-     * 设置符号为已赋值
-     * 
-     * @param name   符号名称
-     * @param curPos 当前位置（报错用）
-     * @throws AnalyzeError 如果未定义则抛异常
-     */
-    private void initializeSymbol(String name, Pos curPos) throws AnalyzeError {
-        var entry = this.symbolTable.get(name);
-        if (entry == null) {
-            throw new AnalyzeError(ErrorCode.NotDeclared, curPos);
-        } else {
-            entry.setInitialized(true);
-        }
-    }
-
-    /**
-     * 获取变量在栈上的偏移
-     * 
-     * @param name   符号名
-     * @param curPos 当前位置（报错用）
-     * @return 栈偏移
-     * @throws AnalyzeError
-     */
-    private int getOffset(String name, Pos curPos) throws AnalyzeError {
-        var entry = this.symbolTable.get(name);
-        if (entry == null) {
-            throw new AnalyzeError(ErrorCode.NotDeclared, curPos);
-        } else {
-            return entry.getStackOffset();
-        }
-    }
-
-    /**
-     * 获取变量是否是常量
-     * 
-     * @param name   符号名
-     * @param curPos 当前位置（报错用）
-     * @return 是否为常量
-     * @throws AnalyzeError
-     */
-    private boolean isConstant(String name, Pos curPos) throws AnalyzeError {
-        var entry = this.symbolTable.get(name);
-        if (entry == null) {
-            throw new AnalyzeError(ErrorCode.NotDeclared, curPos);
-        } else {
-            return entry.isConstant();
-        }
-    }
 //
 //    private void analyseProgram() throws CompileError {
 //        // 程序 -> 'begin' 主过程 'end'

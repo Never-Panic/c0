@@ -14,6 +14,13 @@ public class SymbolTable {
     private int localCount = 0;
     private int globalCount = 0;
 
+    // 单例模式
+    private static SymbolTable instance = new SymbolTable();
+    private SymbolTable(){};
+    public static SymbolTable getInstance() {
+        return instance;
+    }
+
     // TODO 嵌套
 
     public void addSymbol (Symbol symbol) throws AnalyzeError {
@@ -29,19 +36,19 @@ public class SymbolTable {
 
         // 设置序号，更新count
         if (symbol.kind.equals("func")) {
-            symbol.num = funcCount;
+            symbol.stackOffset = funcCount;
             funcCount++;
         } else if (symbol.kind.equals("arg")) {
-            symbol.num = argCount;
+            symbol.stackOffset = argCount;
             argCount++;
         } else if (symbol.kind.equals("var")) {
             if (symbol.level == -1) {
                 // 全局变量
-                symbol.num = globalCount;
+                symbol.stackOffset = globalCount;
                 globalCount++;
             } else {
                 // 局部变量
-                symbol.num = localCount;
+                symbol.stackOffset = localCount;
                 localCount++;
             }
         } else throw new Error("程序写错了，Symbol的kind只能是func/arg/var");
