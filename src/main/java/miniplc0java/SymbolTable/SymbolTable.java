@@ -16,7 +16,7 @@ public class SymbolTable {
 
     // 单例模式
     private static SymbolTable instance = new SymbolTable();
-    private SymbolTable(){};
+    private SymbolTable(){}
     public static SymbolTable getInstance() {
         return instance;
     }
@@ -35,13 +35,13 @@ public class SymbolTable {
         }
 
         // 设置序号，更新count
-        if (symbol.kind.equals("func")) {
+        if (symbol.kind == Kind.Func) {
             symbol.stackOffset = funcCount;
             funcCount++;
-        } else if (symbol.kind.equals("arg")) {
+        } else if (symbol.kind== Kind.Arg) {
             symbol.stackOffset = argCount;
             argCount++;
-        } else if (symbol.kind.equals("var")) {
+        } else if (symbol.kind == Kind.Var) {
             if (symbol.level == -1) {
                 // 全局变量
                 symbol.stackOffset = globalCount;
@@ -59,7 +59,7 @@ public class SymbolTable {
     // 找函数
     public Symbol searchFuncSymbol (String name) {
         for (Symbol s: symbolList) {
-            if (s.level == -1 && s.kind.equals("func") && s.name.equals(name)) return s;
+            if (s.level == -1 && s.kind==Kind.Func && s.name.equals(name)) return s;
         }
         return null;
     }
@@ -68,7 +68,7 @@ public class SymbolTable {
     public Symbol searchVarArgSymbol (String name, int level) {
         while (level>=-1) {
             for (Symbol s: symbolList) {
-                if (s.level == level && (s.kind.equals("var")||s.kind.equals("arg")) && s.name.equals(name)) return s;
+                if (s.level == level && (s.kind==Kind.Var||s.kind==Kind.Arg) && s.name.equals(name)) return s;
             }
             level--;
         }

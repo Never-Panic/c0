@@ -1,13 +1,21 @@
 package miniplc0java.SymbolTable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Symbol {
 
 
-    // TODO isConstant isDeclared
     String name;
-    String kind; // 参数：arg 变量：var 函数：func
-    String type; // int double ?void
+    Kind kind; // Arg Var Func
+    Type type; // Int Double Void （函数为返回值类型）
     int level; // 全局为-1； 底层为0
+
+    // 如果是var的话，有这个值
+    boolean isConstant;
+
+    // 如果是函数，有参数类型表
+    List<String> args;
 
     /*
         func,arg从1开始(arg0为返回值)
@@ -15,14 +23,39 @@ public class Symbol {
      */
     int stackOffset; //栈偏移
 
-    public Symbol(String name, String kind, String type, int level) {
+    public Symbol(String name, Kind kind, Type type, int level) {
         this.name = name;
         this.kind = kind;
         this.type = type;
         this.level = level;
     }
 
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
     public int getStackOffset() {
         return stackOffset;
+    }
+
+    public boolean isConstant() {
+        return isConstant;
+    }
+
+    public void setConstant(boolean constant) {
+        isConstant = constant;
+    }
+
+    public void addArg (String type) {
+        if (args == null) args = new ArrayList<>();
+        args.add(type);
+    }
+
+    public List<String> getArgs() {
+        return args;
     }
 }

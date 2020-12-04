@@ -1,4 +1,6 @@
+//java -jar ./build/libs/miniplc0java.jar -l -o output.txt input.txt
+
 let i: int = 1;
-    let j: int = 2;
+const j: int = 2;
     
-    i = -'s'+j
+j = -'s'+ i
