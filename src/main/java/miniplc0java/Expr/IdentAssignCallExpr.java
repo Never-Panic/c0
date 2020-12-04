@@ -2,6 +2,7 @@ package miniplc0java.Expr;
 
 import miniplc0java.SymbolTable.Symbol;
 import miniplc0java.SymbolTable.SymbolTable;
+import miniplc0java.SymbolTable.Type;
 import miniplc0java.analyser.Analyser;
 import miniplc0java.error.AnalyzeError;
 import miniplc0java.error.CompileError;
@@ -18,6 +19,7 @@ public class IdentAssignCallExpr extends Expr {
     }
 
     //分析函数
+    // TODO: void -> Type
     public void AnalyseIdentAssignCallExpr () throws CompileError {
         Token Ident = analyser.expect(TokenType.IDENT);
         SymbolTable symbolTable = SymbolTable.getInstance();

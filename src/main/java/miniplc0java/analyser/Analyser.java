@@ -43,11 +43,6 @@ public final class Analyser {
     public List<Instruction> analyse() throws CompileError {
         // TODO analyse !!!!!!!!!!!
 
-        //stmt * 2
-        Stmt stmt = new Stmt(this);
-        stmt.AnalyseStmt();
-        stmt.AnalyseStmt();
-
         //正在测试表达式
         Expr expr = new Expr(this);
         expr.AnalyseExpr();

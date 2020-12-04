@@ -1,6 +1,4 @@
 //java -jar ./build/libs/miniplc0java.jar -l -o output.txt input.txt
+//先测试一下 as 和 OPG
 
-let i: int = 1;
-const j: int = 2;
-    
-j = -'s'+ i
+1 - (((1.0+3.0) as int) as double * 2.0 )as int * 1

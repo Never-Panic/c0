@@ -38,6 +38,14 @@ public class Symbol {
         this.type = type;
     }
 
+    public Kind getKind() {
+        return kind;
+    }
+
+    public void setKind(Kind kind) {
+        this.kind = kind;
+    }
+
     public int getStackOffset() {
         return stackOffset;
     }

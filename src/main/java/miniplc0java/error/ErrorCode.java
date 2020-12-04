@@ -7,5 +7,7 @@ public enum ErrorCode {
     AssignToConstant,
     DuplicateDeclaration,
     ExpectedToken,
-    ArgsNotMatch
+    ArgsNotMatch,
+    TypeNotMatch,
+    UseVoid
 }
