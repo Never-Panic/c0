@@ -25,11 +25,11 @@ public class Expr {
         NegateExpr negateExpr = new NegateExpr(analyser);
         LiteralExpr literalExpr = new LiteralExpr(analyser);
         GroupExpr groupExpr = new GroupExpr(analyser);
-        IdentExpr identExpr = new IdentExpr(analyser);
+        IdentAssignExpr identAssignExpr = new IdentAssignExpr(analyser);
 
         if (analyser.peek().getTokenType() == TokenType.MINUS) negateExpr.AnalyseNegateExpr();
         else if (analyser.peek().getTokenType() == TokenType.L_PAREN) groupExpr.AnalyseGroupExpr();
-        else if (analyser.peek().getTokenType() == TokenType.IDENT) identExpr.AnalyseIdentExpr();
+        else if (analyser.peek().getTokenType() == TokenType.IDENT) identAssignExpr.AnalyseIdentAssignExpr();
         else literalExpr.AnalyseLiteralExpr();
     }
 }

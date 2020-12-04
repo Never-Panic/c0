@@ -1,4 +1,4 @@
- let i: int = 1;
-    let j:int = 2;
+let i: int = 1;
+    let j: int = 2;
     
-3*(i+j)
+    i = -'s'+j
