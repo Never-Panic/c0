@@ -2,7 +2,10 @@ package miniplc0java.analyser;
 
 import miniplc0java.Expr.Expr;
 import miniplc0java.Stmt.Stmt;
+import miniplc0java.SymbolTable.Kind;
+import miniplc0java.SymbolTable.Symbol;
 import miniplc0java.SymbolTable.SymbolTable;
+import miniplc0java.SymbolTable.Type;
 import miniplc0java.error.AnalyzeError;
 import miniplc0java.error.CompileError;
 import miniplc0java.error.ErrorCode;
@@ -43,9 +46,25 @@ public final class Analyser {
     public List<Instruction> analyse() throws CompileError {
         // TODO analyse !!!!!!!!!!!
 
-        //正在测试表达式
+        // 函数和全局变量 level 必然为-1
+        //  测试一下call expr
+        Symbol func1 = new Symbol("func1", Kind.Func, Type.Int, -1);
+        func1.addArg(Type.Int);
+        func1.addArg(Type.Int);
+
+        Symbol func2 = new Symbol("func2", Kind.Func, Type.Int, -1);
+
+        symbolTable.addSymbol(func1);
+        symbolTable.addSymbol(func2);
+
+        Stmt stmt = new Stmt(this);
+        stmt.AnalyseStmt();
+        stmt.AnalyseStmt();
+
         Expr expr = new Expr(this);
         expr.AnalyseExpr();
+        expr.AnalyseExpr();
+
 
         // analyseProgram();
         return instructions;

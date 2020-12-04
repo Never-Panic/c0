@@ -30,7 +30,7 @@ public class Expr {
 
         if (analyser.peek().getTokenType() == TokenType.MINUS) return negateExpr.AnalyseNegateExpr();
         else if (analyser.peek().getTokenType() == TokenType.L_PAREN) return groupExpr.AnalyseGroupExpr();
-//        else if (analyser.peek().getTokenType() == TokenType.IDENT) return identAssignCallExpr.AnalyseIdentAssignCallExpr();
+        else if (analyser.peek().getTokenType() == TokenType.IDENT) return identAssignCallExpr.AnalyseIdentAssignCallExpr();
         else return literalExpr.AnalyseLiteralExpr();
     }
 }

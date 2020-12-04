@@ -1,4 +1,7 @@
 //java -jar ./build/libs/miniplc0java.jar -l -o output.txt input.txt
-//先测试一下 as 和 OPG
 
-1 - (((1.0+3.0) as int) as double * 2.0 )as int * 1
+
+let i: int = 0;
+let j: int = 0;
+func1((i as double + 2.0) as int, 1.0 as int)
+func2()

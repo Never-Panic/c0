@@ -15,7 +15,7 @@ public class Symbol {
     boolean isConstant;
 
     // 如果是函数，有参数类型表
-    List<String> args;
+    List<Type> args = new ArrayList<>();
 
     /*
         func,arg从1开始(arg0为返回值)
@@ -58,12 +58,11 @@ public class Symbol {
         isConstant = constant;
     }
 
-    public void addArg (String type) {
-        if (args == null) args = new ArrayList<>();
+    public void addArg (Type type) {
         args.add(type);
     }
 
-    public List<String> getArgs() {
+    public List<Type> getArgs() {
         return args;
     }
 }

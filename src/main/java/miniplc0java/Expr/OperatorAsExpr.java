@@ -95,7 +95,6 @@ public class OperatorAsExpr extends Expr{
 
         while (isBinaryOrAs(analyser.peek())) {
             // 因为as的优先级比任何双目运算符都要高，所以遇见as输出就完事了
-            // TODO 判断类型转换是否符合语义，并且浮点数的加减指令和整数不一样，之后再考虑吧
             if (analyser.peek().getTokenType()==TokenType.AS_KW) {
                 analyser.next();
                 Token peek = analyser.peek();

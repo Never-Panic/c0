@@ -19,8 +19,7 @@ public class IdentAssignCallExpr extends Expr {
     }
 
     //分析函数
-    // TODO: void -> Type
-    public void AnalyseIdentAssignCallExpr () throws CompileError {
+    public Type AnalyseIdentAssignCallExpr () throws CompileError {
         Token Ident = analyser.expect(TokenType.IDENT);
         SymbolTable symbolTable = SymbolTable.getInstance();
 
@@ -42,7 +41,12 @@ public class IdentAssignCallExpr extends Expr {
             AnalyseExpr();
 
             System.out.println("Store64");
-        } else if (analyser.peek().getTokenType() == TokenType.L_PAREN) {
+
+            return Type.Void;
+
+        }
+        else if (analyser.peek().getTokenType() == TokenType.L_PAREN) {
+            // 分析 call expr
             analyser.next();
 
             Symbol s = symbolTable.searchFuncSymbol((String)Ident.getValue());
@@ -54,17 +58,33 @@ public class IdentAssignCallExpr extends Expr {
                 if (s.getArgs().size() != 0) throw new AnalyzeError(ErrorCode.ArgsNotMatch, analyser.peek().getStartPos());
                 System.out.println("StackAlloc(1)");
                 System.out.println("Call(" + s.getStackOffset() + ")");
+                return s.getType();
             } else {
+                System.out.println("StackAlloc(1)");
+
                 // 分析参数列表
-                // TODO 这里必须要属性了！！！！！！！
-                List<String> args = new ArrayList<>();
+                List<Type> args = new ArrayList<>();
+                args.add(AnalyseExpr());
 
+                while (analyser.peek().getTokenType() == TokenType.COMMA) {
+                    analyser.next();
+                    args.add(AnalyseExpr());
+                }
+                analyser.expect(TokenType.R_PAREN);
 
+                // 检查参数列表是否一致
+                if (args.size() == s.getArgs().size()) {
+                    for (int i=0; i<args.size(); i++) {
+                        if (args.get(i) != s.getArgs().get(i)) throw new AnalyzeError(ErrorCode.ArgsNotMatch, analyser.peek().getStartPos());
+                    }
+                } else throw new AnalyzeError(ErrorCode.ArgsNotMatch, analyser.peek().getStartPos());
 
-
+                System.out.println("Call(" + s.getStackOffset() + ")");
+                return s.getType();
             }
 
-        } else {
+        }
+        else {
             // 如果不是 = 也不是 （，那就是单纯的的IdentExpr
             // TODO 先假设都是level=0
             Symbol s = symbolTable.searchVarArgSymbol((String)Ident.getValue(), 0);
@@ -72,6 +92,8 @@ public class IdentAssignCallExpr extends Expr {
 
             System.out.println("LocA(" + s.getStackOffset() + ")");
             System.out.println("Load64");
+
+            return s.getType();
         }
     }
 
