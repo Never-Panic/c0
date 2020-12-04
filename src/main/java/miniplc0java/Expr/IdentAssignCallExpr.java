@@ -38,9 +38,12 @@ public class IdentAssignCallExpr extends Expr {
             System.out.println("LocA(" + s.getStackOffset() +")");
 
             analyser.next();
-            AnalyseExpr();
+            Type RType = AnalyseExpr();
 
             System.out.println("Store64");
+
+            // 检查一下赋值语句两端类型是否相同
+            if (RType!=s.getType()) throw new AnalyzeError(ErrorCode.TypeNotMatch, analyser.peek().getStartPos());
 
             return Type.Void;
 

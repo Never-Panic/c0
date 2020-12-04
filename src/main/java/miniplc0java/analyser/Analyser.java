@@ -52,7 +52,7 @@ public final class Analyser {
         func1.addArg(Type.Int);
         func1.addArg(Type.Int);
 
-        Symbol func2 = new Symbol("func2", Kind.Func, Type.Int, -1);
+        Symbol func2 = new Symbol("func2", Kind.Func, Type.Double, -1);
 
         symbolTable.addSymbol(func1);
         symbolTable.addSymbol(func2);
@@ -62,7 +62,6 @@ public final class Analyser {
         stmt.AnalyseStmt();
 
         Expr expr = new Expr(this);
-        expr.AnalyseExpr();
         expr.AnalyseExpr();
 
 

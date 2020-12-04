@@ -17,7 +17,6 @@ public class DeclStmt extends Stmt{
     public SymbolTable symbolTable = SymbolTable.getInstance();
 
     //分析函数
-    //TODO 类型的语义分析
     public void AnalyseDeclStmt () throws CompileError {
         if (analyser.peek().getTokenType() == TokenType.LET_KW) {
             analyser.next();
@@ -46,7 +45,9 @@ public class DeclStmt extends Stmt{
 
                 analyser.next();
                 Expr expr = new Expr(analyser);
-                expr.AnalyseExpr();
+                Type RType = expr.AnalyseExpr();
+                //检查类型是否一致
+                if (RType!=symbol.getType()) throw new AnalyzeError(ErrorCode.TypeNotMatch, analyser.peek().getStartPos());
 
                 System.out.println("Store64");
             }
@@ -80,7 +81,9 @@ public class DeclStmt extends Stmt{
             System.out.println("LocA(" + symbol.getStackOffset() + ")");
 
             Expr expr = new Expr(analyser);
-            expr.AnalyseExpr();
+            Type RType = expr.AnalyseExpr();
+            //检查类型是否一致
+            if (RType!=symbol.getType()) throw new AnalyzeError(ErrorCode.TypeNotMatch, analyser.peek().getStartPos());
 
             System.out.println("Store64");
 
