@@ -21,4 +21,8 @@ public class Symbol {
         this.type = type;
         this.level = level;
     }
+
+    public int getStackOffset() {
+        return stackOffset;
+    }
 }

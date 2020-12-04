@@ -1,5 +1,6 @@
 package miniplc0java.Stmt;
 
+import miniplc0java.Expr.Expr;
 import miniplc0java.SymbolTable.Symbol;
 import miniplc0java.SymbolTable.SymbolTable;
 import miniplc0java.analyser.Analyser;
@@ -23,17 +24,62 @@ public class DeclStmt extends Stmt{
             analyser.expect(TokenType.COLON);
             Token ty = analyser.expect(TokenType.IDENT);
 
-            // TODO 加符号表时候的level现在随便设了个0, 并且现在默认是初始化的var
+            // TODO 加符号表时候的level现在随便设了个0
+            Symbol symbol = null;
+
             if (((String)ty.getValue()).equals("int")) {
-                symbolTable.addSymbol(new Symbol((String)Ident.getValue(), "var", "int", 0));
+                symbol = new Symbol((String)Ident.getValue(), "var", "int", 0);
+                symbolTable.addSymbol(symbol);
             } else if (((String)ty.getValue()).equals("double")) {
-                symbolTable.addSymbol(new Symbol((String)Ident.getValue(), "var", "double", 0));
+                symbol = new Symbol((String)Ident.getValue(), "var", "double", 0);
+                symbolTable.addSymbol(symbol);
             } else throw new AnalyzeError(ErrorCode.InvalidInput, analyser.peek().getStartPos());
 
-            // TODO 该轮到分析=了，我先去洗澡去了
+            //TODO 现在只模拟了局部变量，全局变量要替换为GlobA
+            if (analyser.peek().getTokenType() == TokenType.ASSIGN) {
+                //出现赋值语句，需要输出
+                System.out.println("LocA(" + symbol.getStackOffset() + ")");
+
+                analyser.next();
+                Expr expr = new Expr(analyser);
+                expr.AnalyseExpr();
+
+                System.out.println("Store64");
+            }
+
+            analyser.expect(TokenType.SEMICOLON);
+
 
         } else if (analyser.peek().getTokenType() == TokenType.CONST_KW) {
+            analyser.next();
 
-        }
+            Token Ident = analyser.expect(TokenType.IDENT);
+            analyser.expect(TokenType.COLON);
+            Token ty = analyser.expect(TokenType.IDENT);
+
+            // TODO 加符号表时候的level现在随便设了个0
+            Symbol symbol = null;
+
+            if (((String)ty.getValue()).equals("int")) {
+                symbol = new Symbol((String)Ident.getValue(), "var", "int", 0);
+                symbolTable.addSymbol(symbol);
+            } else if (((String)ty.getValue()).equals("double")) {
+                symbol = new Symbol((String)Ident.getValue(), "var", "double", 0);
+                symbolTable.addSymbol(symbol);
+            } else throw new AnalyzeError(ErrorCode.InvalidInput, analyser.peek().getStartPos());
+
+            analyser.expect(TokenType.ASSIGN);
+
+            //常量必须出现赋值语句，需要输出
+            System.out.println("LocA(" + symbol.getStackOffset() + ")");
+
+            Expr expr = new Expr(analyser);
+            expr.AnalyseExpr();
+
+            System.out.println("Store64");
+
+            analyser.expect(TokenType.SEMICOLON);
+
+        } else throw new AnalyzeError(ErrorCode.InvalidInput, analyser.peek().getStartPos());
     }
 }
