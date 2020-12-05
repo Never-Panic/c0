@@ -1,5 +1,6 @@
 package miniplc0java.Expr;
 
+import miniplc0java.SymbolTable.Kind;
 import miniplc0java.SymbolTable.Symbol;
 import miniplc0java.SymbolTable.SymbolTable;
 import miniplc0java.SymbolTable.Type;
@@ -38,7 +39,11 @@ public class IdentAssignCallExpr extends Expr {
             if (s.getLevel() == -1) {
                 System.out.println("GlobA(" + s.getStackOffset() + ")");
             } else {
-                System.out.println("LocA(" + s.getStackOffset() + ")");
+                if (s.getKind() == Kind.Arg) {
+                    System.out.println("ArgA(" + s.getStackOffset() + ")");
+                } else {
+                    System.out.println("LocA(" + s.getStackOffset() + ")");
+                }
             }
 
             analyser.next();
@@ -103,8 +108,13 @@ public class IdentAssignCallExpr extends Expr {
             if (s.getLevel() == -1) {
                 System.out.println("GlobA(" + s.getStackOffset() + ")");
             } else {
-                System.out.println("LocA(" + s.getStackOffset() + ")");
+                if (s.getKind() == Kind.Arg) {
+                    System.out.println("ArgA(" + s.getStackOffset() + ")");
+                } else {
+                    System.out.println("LocA(" + s.getStackOffset() + ")");
+                }
             }
+
             System.out.println("Load64");
 
             return s.getType();
