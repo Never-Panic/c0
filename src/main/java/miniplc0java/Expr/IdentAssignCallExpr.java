@@ -26,8 +26,8 @@ public class IdentAssignCallExpr extends Expr {
 
         // 如果下一个是赋值号，说明可以继续分析为AssignExpr
         if (analyser.peek().getTokenType() == TokenType.ASSIGN) {
-            // TODO 先假设都是level=0
-            Symbol s = symbolTable.searchVarArgSymbol((String)Ident.getValue(), 0);
+
+            Symbol s = symbolTable.searchVarArgSymbol((String)Ident.getValue(), SymbolTable.LEVEL);
             if (s==null) throw new AnalyzeError(ErrorCode.NoSuchSymbol, analyser.peek().getStartPos());
 
             //首先要检查一下是不是常量，常量无法赋值
@@ -35,7 +35,11 @@ public class IdentAssignCallExpr extends Expr {
                 throw new AnalyzeError(ErrorCode.AssignToConstant, analyser.peek().getStartPos());
             }
 
-            System.out.println("LocA(" + s.getStackOffset() +")");
+            if (s.getLevel() == -1) {
+                System.out.println("GlobA(" + s.getStackOffset() + ")");
+            } else {
+                System.out.println("LocA(" + s.getStackOffset() + ")");
+            }
 
             analyser.next();
             Type RType = AnalyseExpr();
@@ -59,11 +63,15 @@ public class IdentAssignCallExpr extends Expr {
                 analyser.next();
                 // 说明无参数
                 if (s.getArgs().size() != 0) throw new AnalyzeError(ErrorCode.ArgsNotMatch, analyser.peek().getStartPos());
-                System.out.println("StackAlloc(1)");
+                if (s.getType() == Type.Void) System.out.println("StackAlloc(0)");
+                else System.out.println("StackAlloc(1)");
+
                 System.out.println("Call(" + s.getStackOffset() + ")");
                 return s.getType();
             } else {
-                System.out.println("StackAlloc(1)");
+
+                if (s.getType() == Type.Void) System.out.println("StackAlloc(0)");
+                else System.out.println("StackAlloc(1)");
 
                 // 分析参数列表
                 List<Type> args = new ArrayList<>();
@@ -89,11 +97,14 @@ public class IdentAssignCallExpr extends Expr {
         }
         else {
             // 如果不是 = 也不是 （，那就是单纯的的IdentExpr
-            // TODO 先假设都是level=0
-            Symbol s = symbolTable.searchVarArgSymbol((String)Ident.getValue(), 0);
+            Symbol s = symbolTable.searchVarArgSymbol((String)Ident.getValue(), SymbolTable.LEVEL);
             if (s==null) throw new AnalyzeError(ErrorCode.NoSuchSymbol, analyser.peek().getStartPos());
 
-            System.out.println("LocA(" + s.getStackOffset() + ")");
+            if (s.getLevel() == -1) {
+                System.out.println("GlobA(" + s.getStackOffset() + ")");
+            } else {
+                System.out.println("LocA(" + s.getStackOffset() + ")");
+            }
             System.out.println("Load64");
 
             return s.getType();

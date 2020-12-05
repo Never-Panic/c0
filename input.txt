@@ -1,7 +1,25 @@
 //java -jar ./build/libs/miniplc0java.jar -l -o output.txt input.txt
 
-
- let i: int = 0;
-    let j: int = 1;
+    	let i: int = 0;
+ 	let j: int = 1;
     
-    j = func1(i,j);
+ {
+	i;
+	let j: int = 1;
+	j;
+		{
+			let i: int = 2;
+			j;
+		}
+		
+		{
+		    j;
+		    i;
+		    {
+		        i;
+		        let i: int =1;
+		        i;
+		    }
+		}
+ }
+    

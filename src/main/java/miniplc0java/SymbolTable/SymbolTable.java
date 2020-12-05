@@ -14,14 +14,15 @@ public class SymbolTable {
     private int localCount = 0;
     private int globalCount = 0;
 
+    // 全局唯一的层级指针，表示当前分析到的语句在第几层，一开始为-1，即为全局层级
+    public static int LEVEL = -1;
+
     // 单例模式
     private static SymbolTable instance = new SymbolTable();
     private SymbolTable(){}
     public static SymbolTable getInstance() {
         return instance;
     }
-
-    // TODO 嵌套
 
     public void addSymbol (Symbol symbol) throws AnalyzeError {
 

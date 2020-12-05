@@ -46,6 +46,10 @@ public class Symbol {
         this.kind = kind;
     }
 
+    public int getLevel() {
+        return level;
+    }
+
     public int getStackOffset() {
         return stackOffset;
     }
