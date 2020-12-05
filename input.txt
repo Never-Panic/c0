@@ -1,7 +1,6 @@
 //java -jar ./build/libs/miniplc0java.jar -l -o output.txt input.txt
 
-
-fn main() -> void {
+{
     let x:int = 0;
     let y:int = 0;
     let z:int = 0;
@@ -16,5 +15,4 @@ fn main() -> void {
         z = 2;
     }
     
-    return;
 }

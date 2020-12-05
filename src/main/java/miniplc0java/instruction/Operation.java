@@ -1,5 +1,33 @@
 package miniplc0java.instruction;
 
 public enum Operation {
-    ILL, LIT, LOD, STO, ADD, SUB, MUL, DIV, WRT
+    Push,
+    PopN,
+    LocA,
+    ArgA,
+    GlobA,
+    Load64,
+    Store64,
+    Stackalloc,
+    AddI,
+    SubI,
+    MulI,
+    DivI,
+    AddF,
+    SubF,
+    MulF,
+    DivF,
+    Not,
+    CmpI,
+    CmpF,
+    NegI,
+    NegF,
+    ItoF,
+    FtoI,
+    SetGt,
+    SetLt,
+    Br,
+    Brtrue,
+    Call,
+    Ret
 }

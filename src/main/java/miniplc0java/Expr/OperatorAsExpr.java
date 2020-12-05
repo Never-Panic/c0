@@ -63,24 +63,62 @@ public class OperatorAsExpr extends Expr{
             else if (t.getTokenType()==TokenType.DIV) System.out.println("DivI");
             else if (t.getTokenType()==TokenType.PLUS) System.out.println("AddI");
             else if (t.getTokenType()==TokenType.MINUS) System.out.println("SubI");
-            else if (t.getTokenType()==TokenType.GT) System.out.println("GtI");
-            else if (t.getTokenType()==TokenType.LT) System.out.println("LtI");
-            else if (t.getTokenType()==TokenType.GE) System.out.println("GeI");
-            else if (t.getTokenType()==TokenType.LE) System.out.println("LeI");
-            else if (t.getTokenType()==TokenType.EQ) System.out.println("EqI");
-            else if (t.getTokenType()==TokenType.NEQ) System.out.println("NeqI");
+            else if (t.getTokenType()==TokenType.GT) {
+                System.out.println("CmpI");
+                System.out.println("SetGt");
+            }
+            else if (t.getTokenType()==TokenType.LT) {
+                System.out.println("CmpI");
+                System.out.println("SetLt");
+            }
+            else if (t.getTokenType()==TokenType.GE) {
+                System.out.println("CmpI");
+                System.out.println("SetLt");
+                System.out.println("Not");
+            }
+            else if (t.getTokenType()==TokenType.LE) {
+                System.out.println("CmpI");
+                System.out.println("SetGt");
+                System.out.println("Not");
+            }
+            else if (t.getTokenType()==TokenType.EQ) {
+                System.out.println("CmpI");
+                System.out.println("Not");
+            }
+            else if (t.getTokenType()==TokenType.NEQ) {
+                System.out.println("CmpI");
+            }
             else throw new AnalyzeError(ErrorCode.InvalidInput, t.getStartPos());
         } else {
             if (t.getTokenType()==TokenType.MUL) System.out.println("MulF");
             else if (t.getTokenType()==TokenType.DIV) System.out.println("DivF");
             else if (t.getTokenType()==TokenType.PLUS) System.out.println("AddF");
             else if (t.getTokenType()==TokenType.MINUS) System.out.println("SubF");
-            else if (t.getTokenType()==TokenType.GT) System.out.println("GtF");
-            else if (t.getTokenType()==TokenType.LT) System.out.println("LtF");
-            else if (t.getTokenType()==TokenType.GE) System.out.println("GeF");
-            else if (t.getTokenType()==TokenType.LE) System.out.println("LeF");
-            else if (t.getTokenType()==TokenType.EQ) System.out.println("EqF");
-            else if (t.getTokenType()==TokenType.NEQ) System.out.println("NeqF");
+            else if (t.getTokenType()==TokenType.GT) {
+                System.out.println("CmpF");
+                System.out.println("SetGt");
+            }
+            else if (t.getTokenType()==TokenType.LT) {
+                System.out.println("CmpF");
+                System.out.println("SetLt");
+            }
+            else if (t.getTokenType()==TokenType.GE) {
+                System.out.println("CmpF");
+                System.out.println("SetLt");
+                System.out.println("Not");
+            }
+            else if (t.getTokenType()==TokenType.LE) {
+                System.out.println("CmpF");
+                System.out.println("SetGt");
+                System.out.println("Not");
+            }
+            else if (t.getTokenType()==TokenType.EQ) {
+                System.out.println("CmpF");
+                System.out.println("Not");
+            }
+            else if (t.getTokenType()==TokenType.NEQ) {
+                System.out.println("CmpF");
+            }
             else throw new AnalyzeError(ErrorCode.InvalidInput, t.getStartPos());
         }
 

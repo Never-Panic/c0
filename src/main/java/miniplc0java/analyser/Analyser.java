@@ -46,10 +46,16 @@ public final class Analyser {
     public List<Instruction> analyse() throws CompileError {
         // TODO analyse !!!!!!!!!!!
 
-        Stmt stmt = new Stmt(this);
-        while (peek().getTokenType() != TokenType.EOF) {
-            stmt.AnalyseStmt();
-        }
+        // 输出了二进制补码
+        System.out.println(Integer.toBinaryString(-7));
+
+        //
+
+
+//        Stmt stmt = new Stmt(this);
+//        while (peek().getTokenType() != TokenType.EOF) {
+//            stmt.AnalyseStmt();
+//        }
 
         // analyseProgram();
         return instructions;
