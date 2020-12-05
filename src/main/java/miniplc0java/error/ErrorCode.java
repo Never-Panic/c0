@@ -9,5 +9,6 @@ public enum ErrorCode {
     ExpectedToken,
     ArgsNotMatch,
     TypeNotMatch,
-    UseVoid
+    UseVoid,
+    CannotDecaleFuncInsideBlock;
 }

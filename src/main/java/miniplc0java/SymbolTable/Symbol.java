@@ -62,11 +62,11 @@ public class Symbol {
         isConstant = constant;
     }
 
-    public void addArg (Type type) {
-        args.add(type);
-    }
-
     public List<Type> getArgs() {
         return args;
+    }
+
+    public void setArgs(List<Type> args) {
+        this.args = args;
     }
 }

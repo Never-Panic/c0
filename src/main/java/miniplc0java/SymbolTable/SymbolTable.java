@@ -39,6 +39,9 @@ public class SymbolTable {
         if (symbol.kind == Kind.Func) {
             symbol.stackOffset = funcCount;
             funcCount++;
+
+            if (symbol.getLevel() != -1) throw new AnalyzeError(ErrorCode.CannotDecaleFuncInsideBlock, null);
+
         } else if (symbol.kind== Kind.Arg) {
             symbol.stackOffset = argCount;
             argCount++;
@@ -52,7 +55,7 @@ public class SymbolTable {
                 symbol.stackOffset = localCount;
                 localCount++;
             }
-        } else throw new Error("程序写错了，Symbol的kind只能是func/arg/var");
+        }
 
         symbolList.add(symbol);
     }

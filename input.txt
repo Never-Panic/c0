@@ -1,16 +1,14 @@
 //java -jar ./build/libs/miniplc0java.jar -l -o output.txt input.txt
 
-{
-    let x:int = 11111;
-    
-    while x == 0 {
-        if x < 2 {
-            33333;        
-        } else {
-            44444;
-        }
-    }
-    
-    22222;
+fn f(x: int) -> void {
+    x;
+}
 
+fn f2(x: int) -> int {
+    x;
+}
+
+fn main () -> void {
+    111;
+    let d: int = f(1);
 }
