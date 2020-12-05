@@ -42,7 +42,6 @@ public final class Analyser {
     /** 添加一条指令 **/
     public static void AddInstruction (Instruction instruction) {
         instructions.add(instruction);
-        System.out.print((instructions.size()-1)+": ");
         System.out.println(instruction);
     }
 

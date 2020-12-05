@@ -3,6 +3,8 @@ package miniplc0java.Stmt;
 import miniplc0java.Expr.Expr;
 import miniplc0java.analyser.Analyser;
 import miniplc0java.error.CompileError;
+import miniplc0java.instruction.Instruction;
+import miniplc0java.instruction.Operation;
 import miniplc0java.tokenizer.TokenType;
 
 public class IfStmt extends Stmt {
@@ -16,20 +18,23 @@ public class IfStmt extends Stmt {
         Expr expr = new Expr(analyser);
         expr.AnalyseExpr(); // 已经将结果放在栈上了，只需要用Br即可
 
-        System.out.println("BrTrue(1)"); // 判断成功，进入该if语句的块
+        Analyser.AddInstruction(new Instruction(Operation.Brtrue, 1)); // 判断成功，进入该if语句的块
 
         // 判断失败，则跳转这个block结束时的下一条语句
-        // TODO 这里就需要 instruction list 了！！！  跳转这个block结束时的下一条语句
-        System.out.println("Br(????)");
+        // 跳转这个block结束时的下一条语句
+        Jump jump1 = new Jump(Analyser.instructions.size());
+        Analyser.AddInstruction(new Instruction(Operation.Br, jump1));
 
         // if block
         BlockStmt blockStmt = new BlockStmt(analyser);
         blockStmt.AnalyseBlockStmt();
 
-        // TODO 此时可以回填第一个Br
+        // 此时可以回填第一个Br
+        jump1.setJumpNum(Analyser.instructions.size() - jump1.getJumpNum());
 
-        // TODO 跳转到所有判断分支结束的时候
-        System.out.println("Br(????)");
+        // 跳转到所有判断分支结束的时候
+        Jump jump2 = new Jump(Analyser.instructions.size());
+        Analyser.AddInstruction(new Instruction(Operation.Br, jump2));
 
         if (analyser.peek().getTokenType()==TokenType.ELSE_KW){
             analyser.next();
@@ -45,7 +50,8 @@ public class IfStmt extends Stmt {
 
         }
 
-        // TODO  此时可以回填第二个Br
+        // 此时可以回填第二个Br
+        jump2.setJumpNum(Analyser.instructions.size() - jump2.getJumpNum()-1);
 
     }
 }

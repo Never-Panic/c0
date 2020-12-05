@@ -1,15 +1,25 @@
 //java -jar ./build/libs/miniplc0java.jar -l -o output.txt input.txt
 
 {
-    let i: int = 0;
-    let j: int;
-    
-    j = -i + 2;
-    
-    {
-        let i:int = j;
-        i = 1;
-        let j : double = 3.1;
+    let x:int = 0;
+    let y:int = 0;
+    let z:int = 0;
+
+    if y < 0 {
+        00000;
+    } else if y > 0 {
+        
+        if z > 1 {
+            11111;
+        } else {
+            22222;
+        }
+        
+    }  else {
+        33333;
     }
     
+    
+    1231231;
+
 }

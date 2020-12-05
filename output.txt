@@ -1,20 +1,43 @@
-LocA(0)
-Push(0)
-Store64
-LocA(1)
-LocA(0)
-Load64
-NegI
-Push(2)
-AddI
-Store64
-LocA(2)
-LocA(1)
-Load64
-Store64
-LocA(2)
-Push(1)
-Store64
-LocA(3)
-Push(3.1)
-Store64
+0: LocA(0)
+1: Push(0)
+2: Store64
+3: LocA(1)
+4: Push(0)
+5: Store64
+6: LocA(2)
+7: Push(0)
+8: Store64
+9: LocA(1)
+10: Load64
+11: Push(0)
+12: CmpI
+13: SetLt
+14: Brtrue(1)
+15: Br(3)
+16: Push(0)
+17: PopN(1)
+18: Br(22) -> 1
+19: LocA(1)
+20: Load64
+21: Push(0)
+22: CmpI
+23: SetGt
+24: Brtrue(1)
+25: Br(13) -> 2
+26: LocA(2)
+27: Load64
+28: Push(1)
+29: CmpI
+30: SetGt
+31: Brtrue(1)
+32: Br(3)
+33: Push(11111)
+34: PopN(1)
+35: Br(2) -> 3
+36: Push(22222)
+37: PopN(1)
+38: Br(2) 3 -> 4
+39: Push(33333) 2
+40: PopN(1)
+41: Push(1231231) 1 4
+42: PopN(1)

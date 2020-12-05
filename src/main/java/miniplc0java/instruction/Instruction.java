@@ -1,24 +1,28 @@
 package miniplc0java.instruction;
 
+import miniplc0java.analyser.Analyser;
+
 import java.util.Objects;
 
 public class Instruction {
     private Operation opt;
     private Object Operand; // 操作数
+    private int num;
 
     // TODO 生成二进制代码
 
     public Instruction (Operation opt, Object Op) {
         this.opt = opt;
         this.Operand = Op;
+        num = Analyser.instructions.size();
     }
 
     @Override
     public String toString() {
         if (Operand == null) {
-            return opt.toString();
+            return num+": "+opt.toString();
         }
-        return opt+"("+Operand+")";
+        return num+": "+opt+"("+Operand+")";
     }
 
     //    @Override
