@@ -27,7 +27,8 @@ import java.util.*;
 public final class Analyser {
 
     Tokenizer tokenizer;
-    ArrayList<Instruction> instructions;
+    //只加不减，用来计算跳转指令的相对值
+    static public ArrayList<Instruction> instructions = new ArrayList<>();
 
     /** 当前偷看的 token */
     Token peekedToken = null;
@@ -38,24 +39,24 @@ public final class Analyser {
     /** 下一个变量的栈偏移 */
     int nextOffset = 0;
 
+    /** 添加一条指令 **/
+    public static void AddInstruction (Instruction instruction) {
+        instructions.add(instruction);
+        System.out.print((instructions.size()-1)+": ");
+        System.out.println(instruction);
+    }
+
     public Analyser(Tokenizer tokenizer) {
         this.tokenizer = tokenizer;
-        this.instructions = new ArrayList<>();
     }
 
     public List<Instruction> analyse() throws CompileError {
         // TODO analyse !!!!!!!!!!!
 
-        // 输出了二进制补码
-        System.out.println(Integer.toBinaryString(-7));
-
-        //
-
-
-//        Stmt stmt = new Stmt(this);
-//        while (peek().getTokenType() != TokenType.EOF) {
-//            stmt.AnalyseStmt();
-//        }
+        Stmt stmt = new Stmt(this);
+        while (peek().getTokenType() != TokenType.EOF) {
+            stmt.AnalyseStmt();
+        }
 
         // analyseProgram();
         return instructions;

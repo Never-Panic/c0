@@ -4,6 +4,8 @@ import miniplc0java.Expr.Expr;
 import miniplc0java.SymbolTable.Type;
 import miniplc0java.analyser.Analyser;
 import miniplc0java.error.CompileError;
+import miniplc0java.instruction.Instruction;
+import miniplc0java.instruction.Operation;
 import miniplc0java.tokenizer.TokenType;
 
 public class ExprStmt extends Stmt{
@@ -18,7 +20,7 @@ public class ExprStmt extends Stmt{
 
         // 表达式如果有值，将会被丢弃
         if (type==Type.Int || type==Type.Double) {
-            System.out.println("PopN(1)");
+            Analyser.AddInstruction(new Instruction(Operation.PopN, 1));
         }
     }
 }

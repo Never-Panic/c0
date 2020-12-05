@@ -9,6 +9,8 @@ import miniplc0java.analyser.Analyser;
 import miniplc0java.error.AnalyzeError;
 import miniplc0java.error.CompileError;
 import miniplc0java.error.ErrorCode;
+import miniplc0java.instruction.Instruction;
+import miniplc0java.instruction.Operation;
 import miniplc0java.tokenizer.Token;
 import miniplc0java.tokenizer.TokenType;
 
@@ -41,9 +43,9 @@ public class DeclStmt extends Stmt{
 
                 //出现赋值语句，需要输出
                 if (symbol.getLevel() == -1) {
-                    System.out.println("GlobA(" + symbol.getStackOffset() + ")");
+                    Analyser.AddInstruction(new Instruction(Operation.GlobA, symbol.getStackOffset()));
                 } else {
-                    System.out.println("LocA(" + symbol.getStackOffset() + ")");
+                    Analyser.AddInstruction(new Instruction(Operation.LocA, symbol.getStackOffset()));
                 }
 
                 analyser.next();
@@ -52,7 +54,7 @@ public class DeclStmt extends Stmt{
                 //检查类型是否一致
                 if (RType!=symbol.getType()) throw new AnalyzeError(ErrorCode.TypeNotMatch, analyser.peek().getStartPos());
 
-                System.out.println("Store64");
+                Analyser.AddInstruction(new Instruction(Operation.Store64, null));
             }
 
             analyser.expect(TokenType.SEMICOLON);
@@ -81,9 +83,9 @@ public class DeclStmt extends Stmt{
 
             //常量必须出现赋值语句，需要输出
             if (symbol.getLevel() == -1) {
-                System.out.println("GlobA(" + symbol.getStackOffset() + ")");
+                Analyser.AddInstruction(new Instruction(Operation.GlobA, symbol.getStackOffset()));
             } else {
-                System.out.println("LocA(" + symbol.getStackOffset() + ")");
+                Analyser.AddInstruction(new Instruction(Operation.LocA, symbol.getStackOffset()));
             }
 
             Expr expr = new Expr(analyser);
@@ -91,7 +93,7 @@ public class DeclStmt extends Stmt{
             //检查类型是否一致
             if (RType!=symbol.getType()) throw new AnalyzeError(ErrorCode.TypeNotMatch, analyser.peek().getStartPos());
 
-            System.out.println("Store64");
+            Analyser.AddInstruction(new Instruction(Operation.Store64, null));
 
             analyser.expect(TokenType.SEMICOLON);
 

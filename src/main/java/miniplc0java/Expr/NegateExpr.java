@@ -5,6 +5,8 @@ import miniplc0java.analyser.Analyser;
 import miniplc0java.error.AnalyzeError;
 import miniplc0java.error.CompileError;
 import miniplc0java.error.ErrorCode;
+import miniplc0java.instruction.Instruction;
+import miniplc0java.instruction.Operation;
 import miniplc0java.tokenizer.TokenType;
 
 public class NegateExpr extends Expr {
@@ -17,9 +19,9 @@ public class NegateExpr extends Expr {
         Type type = AnalyseNotOperatorAsExpr();
         //总是在最后输出NEG
         if (type == Type.Int) {
-            System.out.println("NegI");
+            Analyser.AddInstruction(new Instruction(Operation.NegI, null));
         } else if (type == Type.Double) {
-            System.out.println("NegF");
+            Analyser.AddInstruction(new Instruction(Operation.NegF, null));
         } else throw new AnalyzeError(ErrorCode.UseVoid, analyser.peek().getStartPos());
 
         return type;

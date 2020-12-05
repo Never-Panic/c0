@@ -15,6 +15,9 @@ public class Instruction {
 
     @Override
     public String toString() {
+        if (Operand == null) {
+            return opt.toString();
+        }
         return opt+"("+Operand+")";
     }
 

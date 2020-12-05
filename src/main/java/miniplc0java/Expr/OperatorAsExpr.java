@@ -6,6 +6,8 @@ import miniplc0java.error.AnalyzeError;
 import miniplc0java.error.CompileError;
 import miniplc0java.error.ErrorCode;
 import miniplc0java.error.TokenizeError;
+import miniplc0java.instruction.Instruction;
+import miniplc0java.instruction.Operation;
 import miniplc0java.tokenizer.Token;
 import miniplc0java.tokenizer.TokenType;
 
@@ -59,65 +61,65 @@ public class OperatorAsExpr extends Expr{
 
         // TODO  将print函数转换为添加命令
         if (Rtype == Type.Int){
-            if (t.getTokenType()==TokenType.MUL) System.out.println("MulI");
-            else if (t.getTokenType()==TokenType.DIV) System.out.println("DivI");
-            else if (t.getTokenType()==TokenType.PLUS) System.out.println("AddI");
-            else if (t.getTokenType()==TokenType.MINUS) System.out.println("SubI");
+            if (t.getTokenType()==TokenType.MUL) Analyser.AddInstruction(new Instruction(Operation.MulI, null));
+            else if (t.getTokenType()==TokenType.DIV) Analyser.AddInstruction(new Instruction(Operation.DivI, null));
+            else if (t.getTokenType()==TokenType.PLUS) Analyser.AddInstruction(new Instruction(Operation.AddI, null));
+            else if (t.getTokenType()==TokenType.MINUS) Analyser.AddInstruction(new Instruction(Operation.SubI, null));
             else if (t.getTokenType()==TokenType.GT) {
-                System.out.println("CmpI");
-                System.out.println("SetGt");
+                Analyser.AddInstruction(new Instruction(Operation.CmpI, null));
+                Analyser.AddInstruction(new Instruction(Operation.SetGt, null));
             }
             else if (t.getTokenType()==TokenType.LT) {
-                System.out.println("CmpI");
-                System.out.println("SetLt");
+                Analyser.AddInstruction(new Instruction(Operation.CmpI, null));
+                Analyser.AddInstruction(new Instruction(Operation.SetLt, null));
             }
             else if (t.getTokenType()==TokenType.GE) {
-                System.out.println("CmpI");
-                System.out.println("SetLt");
-                System.out.println("Not");
+                Analyser.AddInstruction(new Instruction(Operation.CmpI, null));
+                Analyser.AddInstruction(new Instruction(Operation.SetLt, null));
+                Analyser.AddInstruction(new Instruction(Operation.Not, null));
             }
             else if (t.getTokenType()==TokenType.LE) {
-                System.out.println("CmpI");
-                System.out.println("SetGt");
-                System.out.println("Not");
+                Analyser.AddInstruction(new Instruction(Operation.CmpI, null));
+                Analyser.AddInstruction(new Instruction(Operation.SetGt, null));
+                Analyser.AddInstruction(new Instruction(Operation.Not, null));
             }
             else if (t.getTokenType()==TokenType.EQ) {
-                System.out.println("CmpI");
-                System.out.println("Not");
+                Analyser.AddInstruction(new Instruction(Operation.CmpI, null));
+                Analyser.AddInstruction(new Instruction(Operation.Not, null));
             }
             else if (t.getTokenType()==TokenType.NEQ) {
-                System.out.println("CmpI");
+                Analyser.AddInstruction(new Instruction(Operation.CmpI, null));
             }
             else throw new AnalyzeError(ErrorCode.InvalidInput, t.getStartPos());
         } else {
-            if (t.getTokenType()==TokenType.MUL) System.out.println("MulF");
-            else if (t.getTokenType()==TokenType.DIV) System.out.println("DivF");
-            else if (t.getTokenType()==TokenType.PLUS) System.out.println("AddF");
-            else if (t.getTokenType()==TokenType.MINUS) System.out.println("SubF");
+            if (t.getTokenType()==TokenType.MUL) Analyser.AddInstruction(new Instruction(Operation.MulF, null));
+            else if (t.getTokenType()==TokenType.DIV) Analyser.AddInstruction(new Instruction(Operation.DivF, null));
+            else if (t.getTokenType()==TokenType.PLUS) Analyser.AddInstruction(new Instruction(Operation.AddF, null));
+            else if (t.getTokenType()==TokenType.MINUS) Analyser.AddInstruction(new Instruction(Operation.SubF, null));
             else if (t.getTokenType()==TokenType.GT) {
-                System.out.println("CmpF");
-                System.out.println("SetGt");
+                Analyser.AddInstruction(new Instruction(Operation.CmpF, null));
+                Analyser.AddInstruction(new Instruction(Operation.SetGt, null));
             }
             else if (t.getTokenType()==TokenType.LT) {
-                System.out.println("CmpF");
-                System.out.println("SetLt");
+                Analyser.AddInstruction(new Instruction(Operation.CmpF, null));
+                Analyser.AddInstruction(new Instruction(Operation.SetLt, null));
             }
             else if (t.getTokenType()==TokenType.GE) {
-                System.out.println("CmpF");
-                System.out.println("SetLt");
-                System.out.println("Not");
+                Analyser.AddInstruction(new Instruction(Operation.CmpF, null));
+                Analyser.AddInstruction(new Instruction(Operation.SetLt, null));
+                Analyser.AddInstruction(new Instruction(Operation.Not, null));
             }
             else if (t.getTokenType()==TokenType.LE) {
-                System.out.println("CmpF");
-                System.out.println("SetGt");
-                System.out.println("Not");
+                Analyser.AddInstruction(new Instruction(Operation.CmpF, null));
+                Analyser.AddInstruction(new Instruction(Operation.SetGt, null));
+                Analyser.AddInstruction(new Instruction(Operation.Not, null));
             }
             else if (t.getTokenType()==TokenType.EQ) {
-                System.out.println("CmpF");
-                System.out.println("Not");
+                Analyser.AddInstruction(new Instruction(Operation.CmpF, null));
+                Analyser.AddInstruction(new Instruction(Operation.Not, null));
             }
             else if (t.getTokenType()==TokenType.NEQ) {
-                System.out.println("CmpF");
+                Analyser.AddInstruction(new Instruction(Operation.CmpF, null));
             }
             else throw new AnalyzeError(ErrorCode.InvalidInput, t.getStartPos());
         }
@@ -139,14 +141,14 @@ public class OperatorAsExpr extends Expr{
                 if (peek.getTokenType()==TokenType.IDENT) {
                     analyser.next();
                     if (peek.getValue().equals("int")) {
-                        if (LType == Type.Double) System.out.println("FtoI");
+                        if (LType == Type.Double) Analyser.AddInstruction(new Instruction(Operation.FtoI, null));
                         else if (LType == Type.Void) throw new AnalyzeError(ErrorCode.UseVoid, analyser.peek().getStartPos());
                         TypeStack.pop();
                         TypeStack.push(Type.Int);
                         LType = Type.Int;
 
                     } else if (peek.getValue().equals("double")) {
-                        if (LType == Type.Int) System.out.println("ItoF");
+                        if (LType == Type.Int) Analyser.AddInstruction(new Instruction(Operation.ItoF, null));
                         else if (LType == Type.Void) throw new AnalyzeError(ErrorCode.UseVoid, analyser.peek().getStartPos());
                         TypeStack.pop();
                         TypeStack.push(Type.Double);

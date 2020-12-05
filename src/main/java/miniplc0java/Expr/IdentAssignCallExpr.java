@@ -8,6 +8,8 @@ import miniplc0java.analyser.Analyser;
 import miniplc0java.error.AnalyzeError;
 import miniplc0java.error.CompileError;
 import miniplc0java.error.ErrorCode;
+import miniplc0java.instruction.Instruction;
+import miniplc0java.instruction.Operation;
 import miniplc0java.tokenizer.Token;
 import miniplc0java.tokenizer.TokenType;
 
@@ -37,19 +39,19 @@ public class IdentAssignCallExpr extends Expr {
             }
 
             if (s.getLevel() == -1) {
-                System.out.println("GlobA(" + s.getStackOffset() + ")");
+                Analyser.AddInstruction(new Instruction(Operation.GlobA, s.getStackOffset()));
             } else {
                 if (s.getKind() == Kind.Arg) {
-                    System.out.println("ArgA(" + s.getStackOffset() + ")");
+                    Analyser.AddInstruction(new Instruction(Operation.ArgA, s.getStackOffset()));
                 } else {
-                    System.out.println("LocA(" + s.getStackOffset() + ")");
+                    Analyser.AddInstruction(new Instruction(Operation.LocA, s.getStackOffset()));
                 }
             }
 
             analyser.next();
             Type RType = AnalyseExpr();
 
-            System.out.println("Store64");
+            Analyser.AddInstruction(new Instruction(Operation.Store64, null));
 
             // 检查一下赋值语句两端类型是否相同
             if (RType!=s.getType()) throw new AnalyzeError(ErrorCode.TypeNotMatch, analyser.peek().getStartPos());
@@ -68,15 +70,15 @@ public class IdentAssignCallExpr extends Expr {
                 analyser.next();
                 // 说明无参数
                 if (s.getArgs().size() != 0) throw new AnalyzeError(ErrorCode.ArgsNotMatch, analyser.peek().getStartPos());
-                if (s.getType() == Type.Void) System.out.println("StackAlloc(0)");
-                else System.out.println("StackAlloc(1)");
+                if (s.getType() == Type.Void) Analyser.AddInstruction(new Instruction(Operation.Stackalloc, 0));
+                else Analyser.AddInstruction(new Instruction(Operation.Stackalloc, 1));
 
-                System.out.println("Call(" + s.getStackOffset() + ")");
+                Analyser.AddInstruction(new Instruction(Operation.Call, s.getStackOffset()));
                 return s.getType();
             } else {
 
-                if (s.getType() == Type.Void) System.out.println("StackAlloc(0)");
-                else System.out.println("StackAlloc(1)");
+                if (s.getType() == Type.Void) Analyser.AddInstruction(new Instruction(Operation.Stackalloc, 0));
+                else Analyser.AddInstruction(new Instruction(Operation.Stackalloc, 1));
 
                 // 分析参数列表
                 List<Type> args = new ArrayList<>();
@@ -95,7 +97,7 @@ public class IdentAssignCallExpr extends Expr {
                     }
                 } else throw new AnalyzeError(ErrorCode.ArgsNotMatch, analyser.peek().getStartPos());
 
-                System.out.println("Call(" + s.getStackOffset() + ")");
+                Analyser.AddInstruction(new Instruction(Operation.Call, s.getStackOffset()));
                 return s.getType();
             }
 
@@ -106,16 +108,16 @@ public class IdentAssignCallExpr extends Expr {
             if (s==null) throw new AnalyzeError(ErrorCode.NoSuchSymbol, analyser.peek().getStartPos());
 
             if (s.getLevel() == -1) {
-                System.out.println("GlobA(" + s.getStackOffset() + ")");
+                Analyser.AddInstruction(new Instruction(Operation.GlobA, s.getStackOffset()));
             } else {
                 if (s.getKind() == Kind.Arg) {
-                    System.out.println("ArgA(" + s.getStackOffset() + ")");
+                    Analyser.AddInstruction(new Instruction(Operation.ArgA, s.getStackOffset()));
                 } else {
-                    System.out.println("LocA(" + s.getStackOffset() + ")");
+                    Analyser.AddInstruction(new Instruction(Operation.LocA, s.getStackOffset()));
                 }
             }
 
-            System.out.println("Load64");
+            Analyser.AddInstruction(new Instruction(Operation.Load64, null));
 
             return s.getType();
         }
