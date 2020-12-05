@@ -16,6 +16,7 @@ public class Stmt {
         ExprStmt exprStmt = new ExprStmt(analyser);
         BlockStmt blockStmt = new BlockStmt(analyser);
         IfStmt ifStmt = new IfStmt(analyser);
+        WhileStmt whileStmt = new WhileStmt(analyser);
 
         if (analyser.peek().getTokenType() == TokenType.LET_KW||analyser.peek().getTokenType() == TokenType.CONST_KW){
             declStmt.AnalyseDeclStmt();
@@ -26,6 +27,8 @@ public class Stmt {
             analyser.next();
         } else if (analyser.peek().getTokenType() == TokenType.IF_KW) {
             ifStmt.AnalyseIfStmt();
+        } else if (analyser.peek().getTokenType() == TokenType.WHILE_KW) {
+            whileStmt.AnalyseWhileStmt();
         }
         else {
             exprStmt.AnalyseExprStmt();
