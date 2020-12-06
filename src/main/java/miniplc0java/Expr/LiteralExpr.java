@@ -30,14 +30,15 @@ public class LiteralExpr extends Expr {
             Token Str = analyser.next();
 
             SymbolTable symbolTable = SymbolTable.getInstance();
-            // 必须是const，Type无所谓
-            Symbol symbol = new Symbol((String) Str.getValue(), Kind.Var, Type.Int, -1);
+            // 必须是const，Type无所谓, name 只要不和其他重合就可以,这里设为instructions.size()
+            Symbol symbol = new Symbol( Integer.toString(Analyser.instructions.size()) , Kind.Var, Type.Int, -1);
             symbol.setConstant(true);
+            symbol.setValue((String) Str.getValue());
 
             symbolTable.addSymbol(symbol);
 
             // 现在就需要计算offset = 偏移量 + 已经定义的函数数量
-            Analyser.AddInstruction(new Instruction(Operation.Push, symbolTable.getGlobalCount() - 1 + symbolTable.getFuncCount() - 2));
+            Analyser.AddInstruction(new Instruction(Operation.Push, symbolTable.getGlobalCount() + symbolTable.getFuncCount() - 2));
 
             // 随便返回一个int
             return Type.Int;

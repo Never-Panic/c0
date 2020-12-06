@@ -33,7 +33,8 @@ public class Program {
         FuncDefIns funcDefIns = new FuncDefIns();
         Analyser.AddInstruction(funcDefIns);
 
-        //decl_stmt* 也就是_start函数的内容
+        /** decl_stmt*/
+        // 也就是_start函数的内容
         DeclStmt declStmt = new DeclStmt(analyser);
         while (analyser.peek().getTokenType() != TokenType.FN_KW) {
             declStmt.AnalyseDeclStmt();
@@ -55,11 +56,12 @@ public class Program {
 
 
 
-        //function*
+        /** function*/
         Function function = new Function(analyser);
         while (analyser.peek().getTokenType() != TokenType.EOF) {
             function.AnalyseFunction();
         }
+
         // 一个合法的 c0 程序必须存在一个名为 main 的函数作为程序入口
         Symbol main = symbolTable.searchFuncSymbol("main");
         if (main == null) throw new AnalyzeError(ErrorCode.NoMainFunc, analyser.peek().getStartPos());
@@ -82,6 +84,7 @@ public class Program {
 
         // 最后再来填全局变量_start, 添加到符号表
         Symbol symbol = new Symbol("_start", Kind.Func, Type.Void, -1);
+        symbol.setValue("_start");
         symbolTable.addSymbol(symbol);
 
 

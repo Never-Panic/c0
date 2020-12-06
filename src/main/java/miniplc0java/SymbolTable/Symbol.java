@@ -5,6 +5,16 @@ import java.util.List;
 
 public class Symbol {
 
+    // 对于字符串
+    String value = null;
+    public String getValue() {
+        return value;
+    }
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+
 
     String name;
     Kind kind; // Arg Var Func
@@ -50,6 +60,10 @@ public class Symbol {
         return level;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public int getStackOffset() {
         return stackOffset;
     }
@@ -72,5 +86,19 @@ public class Symbol {
 
     public void setArgs(List<Type> args) {
         this.args = args;
+    }
+
+    @Override
+    public String toString() {
+        return "Symbol{" +
+                "value='" + value + '\'' +
+               // ", name='" + name + '\'' +
+                ", kind=" + kind +
+                ", type=" + type +
+                ", level=" + level +
+                ", isConstant=" + isConstant +
+                ", args=" + args +
+                ", stackOffset=" + stackOffset +
+                '}' + '\n';
     }
 }

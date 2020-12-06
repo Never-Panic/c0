@@ -1,60 +1,33 @@
-FuncDefIns{num=9, loc_slots=0, arg_slots=0, return_slots=0, body_count=7}
+FuncDefIns{num=13, loc_slots=0, arg_slots=0, return_slots=0, body_count=10}
 1: GlobA(0)
 2: Push(1)
 3: Push(1)
 4: AddI
 5: Store64
-59: Stackalloc(0)
-59: Call(4)
-FuncDefIns{num=2, loc_slots=1, arg_slots=1, return_slots=1, body_count=39}
-8: ArgA(1)
-9: Load64
-10: Push(1)
-11: CmpI
-12: SetGt
-13: Not
-14: Brtrue(1)
-15: Br(5)
-16: ArgA(0)
-17: Push(1)
-18: Store64
-19: Ret
-20: Br(0)
-21: LocA(0)
-22: Stackalloc(1)
-23: ArgA(1)
-24: Load64
-25: Push(1)
-26: SubI
-27: Call(1)
-28: Store64
-29: LocA(0)
-30: LocA(0)
-31: Load64
-32: Stackalloc(1)
-33: ArgA(1)
-34: Load64
-35: Push(2)
-36: SubI
-37: Call(1)
-38: AddI
-39: Store64
-40: Push(1)
-41: PopN(1)
-42: ArgA(0)
-43: LocA(0)
-44: Load64
-45: Store64
-46: Ret
-FuncDefIns{num=3, loc_slots=0, arg_slots=0, return_slots=0, body_count=1}
-48: Ret
-FuncDefIns{num=4, loc_slots=0, arg_slots=0, return_slots=0, body_count=1}
-50: Ret
-FuncDefIns{num=6, loc_slots=0, arg_slots=0, return_slots=0, body_count=3}
-52: Push(5)
-53: PopN(1)
-54: Ret
-FuncDefIns{num=8, loc_slots=0, arg_slots=0, return_slots=0, body_count=3}
-56: Push(7)
-57: PopN(1)
-58: Ret
+6: GlobA(1)
+7: Push(1.0)
+8: Store64
+32: Stackalloc(0)
+32: Call(3)
+FuncDefIns{num=3, loc_slots=0, arg_slots=0, return_slots=0, body_count=3}
+11: Push(2)
+12: PopN(1)
+13: Ret
+FuncDefIns{num=7, loc_slots=0, arg_slots=0, return_slots=0, body_count=7}
+15: Push(4)
+16: PopN(1)
+17: Push(5)
+18: PopN(1)
+19: Push(6)
+20: PopN(1)
+21: Ret
+FuncDefIns{num=10, loc_slots=0, arg_slots=0, return_slots=0, body_count=5}
+23: Push(8)
+24: PopN(1)
+25: Push(9)
+26: PopN(1)
+27: Ret
+FuncDefIns{num=12, loc_slots=0, arg_slots=0, return_slots=0, body_count=3}
+29: Push(11)
+30: PopN(1)
+31: Ret

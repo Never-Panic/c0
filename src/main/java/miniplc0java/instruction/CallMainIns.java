@@ -1,5 +1,8 @@
 package miniplc0java.instruction;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CallMainIns extends Instruction {
 
     private boolean isVoid;
@@ -13,6 +16,20 @@ public class CallMainIns extends Instruction {
 
     public void setMainOffset(int mainOffset) {
         this.mainOffset = mainOffset;
+    }
+
+
+    public List<Byte> getBytes () {
+        List<Byte> output = new ArrayList<>();
+        if (isVoid) {
+            output.addAll((new Instruction(Operation.Stackalloc,0)).getBytes());
+            output.addAll((new Instruction(Operation.Call,mainOffset)).getBytes());
+        } else {
+            output.addAll((new Instruction(Operation.Stackalloc,1)).getBytes());
+            output.addAll((new Instruction(Operation.Call,mainOffset)).getBytes());
+            output.addAll((new Instruction(Operation.PopN, 1)).getBytes());
+        }
+        return output;
     }
 
     @Override

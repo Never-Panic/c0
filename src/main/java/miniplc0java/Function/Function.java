@@ -68,11 +68,13 @@ public class Function {
         symbol.setArgs(args);
 
 
-        symbolTable.addSymbol(symbol);
+       // symbolTable.addSymbol(symbol);
 
         BlockStmt blockStmt = new BlockStmt(analyser);
         blockStmt.AnalyseBlockStmt();
 
+        symbolTable.addSymbol(symbol);
+        symbol.setValue(symbol.getName());
 
         // 回填 FuncDefIns
 

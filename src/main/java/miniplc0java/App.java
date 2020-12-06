@@ -1,11 +1,6 @@
 package miniplc0java;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.PrintStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -18,6 +13,7 @@ import miniplc0java.tokenizer.Token;
 import miniplc0java.tokenizer.TokenType;
 import miniplc0java.tokenizer.Tokenizer;
 
+import miniplc0java.util.PrintUtil;
 import net.sourceforge.argparse4j.*;
 import net.sourceforge.argparse4j.impl.Arguments;
 import net.sourceforge.argparse4j.inf.ArgumentAction;
@@ -26,7 +22,7 @@ import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import net.sourceforge.argparse4j.inf.Namespace;
 
 public class App {
-    public static void main(String[] args) throws CompileError {
+    public static void main(String[] args) throws CompileError, IOException {
         var argparse = buildArgparse();
         Namespace result;
         try {
@@ -94,6 +90,9 @@ public class App {
             }
         }
         else if (result.getBoolean("analyse")) {
+
+
+
             // analyze
             var analyzer = new Analyser(tokenizer);
             List<Instruction> instructions;
@@ -105,10 +104,11 @@ public class App {
                 System.exit(1);
                 return;
             }
-            for (Instruction instruction : instructions) {
-                // TODO 二进制文件
-                output.println(instruction.toString());
-            }
+
+
+            PrintUtil printUtil = new PrintUtil(output);
+            printUtil.print();
+
         } else {
             System.err.println("Please specify either '--analyse' or '--tokenize'.");
             System.exit(3);

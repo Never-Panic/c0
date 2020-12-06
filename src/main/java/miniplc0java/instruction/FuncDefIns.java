@@ -1,5 +1,10 @@
 package miniplc0java.instruction;
 
+import miniplc0java.util.PrintUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class FuncDefIns extends Instruction {
     // 5 个参数
 
@@ -16,6 +21,36 @@ public class FuncDefIns extends Instruction {
 
 
     public FuncDefIns () {};
+
+
+
+
+    public List<Byte> getBytes () {
+        List<Byte> output = new ArrayList<>();
+
+        // functions[0].name
+        List<Byte> name = PrintUtil.int2bytes(4, num);
+        output.addAll(name);
+
+        // functions[0].ret_slots
+        List<Byte> retSlots = PrintUtil.int2bytes(4, return_slots);
+        output.addAll(retSlots);
+
+        // functions[0].param_slots
+        List<Byte> paramsSlots = PrintUtil.int2bytes(4, arg_slots);
+        output.addAll(paramsSlots);
+
+        // functions[0].loc_slots
+        List<Byte> locSlots = PrintUtil.int2bytes(4, loc_slots);
+        output.addAll(locSlots);
+
+        // functions[0].body.count
+        List<Byte> bodyCount = PrintUtil.int2bytes(4, body_count);
+        output.addAll(bodyCount);
+
+        return output;
+    }
+
 
     @Override
     public String toString() {

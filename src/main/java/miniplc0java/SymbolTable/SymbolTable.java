@@ -83,6 +83,20 @@ public class SymbolTable {
         return null;
     }
 
+    // 找所有的全局变量、字符串和函数
+    public List<Symbol> searchGlobal () {
+
+        List<Symbol> list = new ArrayList<>();
+
+        for (Symbol s: symbolList) {
+            if (s.level == -1) {
+                list.add(s);
+            }
+        }
+
+        return list;
+    }
+
     // 一个块结束的时候调用
     public void deleteSymbolOfLevel (int level) {
 
