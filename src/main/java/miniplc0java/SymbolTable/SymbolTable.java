@@ -116,4 +116,8 @@ public class SymbolTable {
     public void setFuncLocCount(int funcLocCount) {
         this.funcLocCount = funcLocCount;
     }
+
+    public int getFuncCount() {
+        return funcCount;
+    }
 }

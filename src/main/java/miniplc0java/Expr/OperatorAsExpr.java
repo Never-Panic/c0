@@ -59,7 +59,6 @@ public class OperatorAsExpr extends Expr{
         if (Rtype==Type.Void) throw new AnalyzeError(ErrorCode.UseVoid, analyser.peek().getStartPos());
         TypeStack.push(Rtype);
 
-        // TODO  将print函数转换为添加命令
         if (Rtype == Type.Int){
             if (t.getTokenType()==TokenType.MUL) Analyser.AddInstruction(new Instruction(Operation.MulI, null));
             else if (t.getTokenType()==TokenType.DIV) Analyser.AddInstruction(new Instruction(Operation.DivI, null));

@@ -21,9 +21,9 @@ public class FuncDefIns extends Instruction {
     public String toString() {
         return "FuncDefIns{" +
                 "num=" + num +
-                ", return_slots=" + return_slots +
-                ", arg_slots=" + arg_slots +
                 ", loc_slots=" + loc_slots +
+                ", arg_slots=" + arg_slots +
+                ", return_slots=" + return_slots +
                 ", body_count=" + body_count +
                 '}';
     }
