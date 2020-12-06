@@ -28,43 +28,28 @@ public class FuncDefIns extends Instruction {
                 '}';
     }
 
-    public int getNum() {
-        return num;
-    }
 
     public void setNum(int num) {
         this.num = num;
-    }
-
-    public int getReturn_slots() {
-        return return_slots;
     }
 
     public void setReturn_slots(int return_slots) {
         this.return_slots = return_slots;
     }
 
-    public int getArg_slots() {
-        return arg_slots;
-    }
-
     public void setArg_slots(int arg_slots) {
         this.arg_slots = arg_slots;
-    }
-
-    public int getLoc_slots() {
-        return loc_slots;
     }
 
     public void setLoc_slots(int loc_slots) {
         this.loc_slots = loc_slots;
     }
 
-    public int getBody_count() {
-        return body_count;
-    }
-
     public void setBody_count(int body_count) {
         this.body_count = body_count;
+    }
+
+    public int getBody_count() {
+        return body_count;
     }
 }

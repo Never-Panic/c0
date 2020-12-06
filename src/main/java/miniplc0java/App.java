@@ -92,7 +92,8 @@ public class App {
             for (Token token : tokens) {
                 output.println(token.toString());
             }
-        } else if (result.getBoolean("analyse")) {
+        }
+        else if (result.getBoolean("analyse")) {
             // analyze
             var analyzer = new Analyser(tokenizer);
             List<Instruction> instructions;
@@ -105,6 +106,7 @@ public class App {
                 return;
             }
             for (Instruction instruction : instructions) {
+                // TODO 二进制文件
                 output.println(instruction.toString());
             }
         } else {

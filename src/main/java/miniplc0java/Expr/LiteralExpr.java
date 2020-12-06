@@ -27,7 +27,6 @@ public class LiteralExpr extends Expr {
             return Type.Double;
 
         } else if (analyser.peek().getTokenType() == TokenType.STRING_LITERAL) {
-            // TODO 构造一个全局变量，输出在o0开头
             Token Str = analyser.next();
 
             SymbolTable symbolTable = SymbolTable.getInstance();

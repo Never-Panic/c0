@@ -1,24 +1,14 @@
 package miniplc0java.analyser;
 
-import miniplc0java.Expr.Expr;
-import miniplc0java.Function.Function;
-import miniplc0java.Program;
-import miniplc0java.Stmt.Stmt;
-import miniplc0java.SymbolTable.Kind;
-import miniplc0java.SymbolTable.Symbol;
+import miniplc0java.Program.Program;
 import miniplc0java.SymbolTable.SymbolTable;
-import miniplc0java.SymbolTable.Type;
-import miniplc0java.error.AnalyzeError;
 import miniplc0java.error.CompileError;
-import miniplc0java.error.ErrorCode;
 import miniplc0java.error.ExpectedTokenError;
 import miniplc0java.error.TokenizeError;
 import miniplc0java.instruction.Instruction;
-import miniplc0java.instruction.Operation;
 import miniplc0java.tokenizer.Token;
 import miniplc0java.tokenizer.TokenType;
 import miniplc0java.tokenizer.Tokenizer;
-import miniplc0java.util.Pos;
 
 import java.util.*;
 
@@ -44,7 +34,6 @@ public final class Analyser {
     /** 添加一条指令 **/
     public static void AddInstruction (Instruction instruction) {
         instructions.add(instruction);
-        System.out.println(instruction);
     }
 
     public Analyser(Tokenizer tokenizer) {
