@@ -2,13 +2,15 @@
 
 fn f(x: int) -> void {
     x;
+    return;
 }
 
 fn f2(x: int) -> int {
     x;
+    return 0;
 }
 
 fn main () -> void {
     111;
-    let d: int = f(1);
+    let d: int = f2(1);
 }

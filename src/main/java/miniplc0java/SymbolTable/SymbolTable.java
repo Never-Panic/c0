@@ -93,4 +93,12 @@ public class SymbolTable {
         }
 
     }
+
+    public void setArgCountForVoidFunc () {
+        // 如果是空函数，那么不用预留返回值，所以argCount-1
+        for (Symbol s : symbolList) {
+            if (s.getKind() == Kind.Arg) s.setStackOffset(s.getStackOffset()-1);
+        }
+    }
+
 }

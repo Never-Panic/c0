@@ -54,6 +54,10 @@ public class Symbol {
         return stackOffset;
     }
 
+    public void setStackOffset(int stackOffset) {
+        this.stackOffset = stackOffset;
+    }
+
     public boolean isConstant() {
         return isConstant;
     }

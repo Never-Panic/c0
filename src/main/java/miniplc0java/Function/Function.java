@@ -17,12 +17,17 @@ import java.util.ArrayList;
 
 public class Function {
     Analyser analyser;
+    public static Type CurrentFuncType;
+
     public Function (Analyser analyser) {
         this.analyser = analyser;
     }
 
 
+    // TODO void函数无return也可以生成ret命令；
     public void AnalyseFunction () throws CompileError {
+        SymbolTable symbolTable = SymbolTable.getInstance();
+
         analyser.expect(TokenType.FN_KW);
         Token Ident = analyser.expect(TokenType.IDENT);
         analyser.expect(TokenType.L_PAREN);
@@ -39,18 +44,27 @@ public class Function {
         // 可以递归，所以在这里填表
         if (((String)ty.getValue()).equals("int")){
             symbol = new Symbol((String)Ident.getValue(), Kind.Func, Type.Int, SymbolTable.LEVEL);
+
+            CurrentFuncType = Type.Int;
         } else if (((String)ty.getValue()).equals("double")) {
             symbol = new Symbol((String)Ident.getValue(), Kind.Func, Type.Double, SymbolTable.LEVEL);
+
+            CurrentFuncType = Type.Double;
         } else if (((String)ty.getValue()).equals("void")) {
             symbol = new Symbol((String)Ident.getValue(), Kind.Func, Type.Void, SymbolTable.LEVEL);
+
+            CurrentFuncType = Type.Void;
+
+            // 空函数不用预留返回值空间
+            symbolTable.setArgCountForVoidFunc();
         } else throw new AnalyzeError(ErrorCode.InvalidInput, analyser.peek().getStartPos());
         symbol.setArgs(args);
 
-        SymbolTable symbolTable = SymbolTable.getInstance();
+
         symbolTable.addSymbol(symbol);
 
         // todo 输出到instructions
-        System.out.println("fn["+symbol.getStackOffset()+"]{");
+        System.out.println("fn["+(symbol.getStackOffset()-1)+"]{");
 
         BlockStmt blockStmt = new BlockStmt(analyser);
         blockStmt.AnalyseBlockStmt();
