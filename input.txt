@@ -1,5 +1,7 @@
 //java -jar ./build/libs/miniplc0java.jar -l -o output.txt input.txt
 
+let xx: int = 1;
+
 fn f(x: int) -> void {
     x;
     return;
@@ -7,10 +9,11 @@ fn f(x: int) -> void {
 
 fn f2(x: int) -> int {
     x;
-    return 0;
+    return 1;
 }
 
 fn main () -> void {
     111;
     let d: int = f2(1);
+    return;
 }

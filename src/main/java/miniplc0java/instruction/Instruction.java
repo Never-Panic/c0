@@ -17,6 +17,9 @@ public class Instruction {
         num = Analyser.instructions.size();
     }
 
+    // 默认构造器
+    public Instruction () {};
+
     @Override
     public String toString() {
         if (Operand == null) {

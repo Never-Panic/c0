@@ -1,18 +1,25 @@
-0: ArgA(0)
-1: Load64
-2: PopN(1)
-3: Ret
-4: ArgA(1)
+0: GlobA(0)
+1: Push(1)
+2: Store64
+FuncDefIns{num=1, return_slots=0, arg_slots=1, loc_slots=0, body_count=4}
+4: ArgA(0)
 5: Load64
 6: PopN(1)
-7: ArgA(0)
-8: Push(0)
-9: Store64
-10: Ret
-11: Push(111)
-12: PopN(1)
-13: LocA(0)
-14: Stackalloc(1)
-15: Push(1)
-16: Call(2)
-17: Store64
+7: Ret
+FuncDefIns{num=2, return_slots=1, arg_slots=1, loc_slots=0, body_count=7}
+9: ArgA(1)
+10: Load64
+11: PopN(1)
+12: ArgA(0)
+13: Push(1)
+14: Store64
+15: Ret
+FuncDefIns{num=3, return_slots=0, arg_slots=0, loc_slots=1, body_count=8}
+17: Push(111)
+18: PopN(1)
+19: LocA(0)
+20: Stackalloc(1)
+21: Push(1)
+22: Call(2)
+23: Store64
+24: Ret

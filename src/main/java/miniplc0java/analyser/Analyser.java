@@ -53,6 +53,8 @@ public final class Analyser {
     public List<Instruction> analyse() throws CompileError {
         // TODO analyse !!!!!!!!!!!
 
+        Stmt s = new Stmt(this);
+        s.AnalyseStmt();
 
         Function f =new Function(this);
         f.AnalyseFunction();

@@ -10,6 +10,9 @@ import miniplc0java.error.AnalyzeError;
 import miniplc0java.error.CompileError;
 import miniplc0java.error.ErrorCode;
 import miniplc0java.error.TokenizeError;
+import miniplc0java.instruction.FuncDefIns;
+import miniplc0java.instruction.Instruction;
+import miniplc0java.instruction.Operation;
 import miniplc0java.tokenizer.Token;
 import miniplc0java.tokenizer.TokenType;
 
@@ -27,6 +30,10 @@ public class Function {
     // TODO void函数无return也可以生成ret命令；
     public void AnalyseFunction () throws CompileError {
         SymbolTable symbolTable = SymbolTable.getInstance();
+        FuncDefIns funcDefIns = new FuncDefIns();
+        Analyser.AddInstruction(funcDefIns);
+
+        int L_insCount = Analyser.instructions.size();
 
         analyser.expect(TokenType.FN_KW);
         Token Ident = analyser.expect(TokenType.IDENT);
@@ -63,13 +70,24 @@ public class Function {
 
         symbolTable.addSymbol(symbol);
 
-        // todo 输出到instructions
-        System.out.println("fn["+(symbol.getStackOffset()-1)+"]{");
-
         BlockStmt blockStmt = new BlockStmt(analyser);
         blockStmt.AnalyseBlockStmt();
 
-        System.out.println("}");
+        // todo 回填 FuncDefIns
+        /// 函数名称在全局变量中的位置 = 函数offset - 1 + 全局变量个数
+        funcDefIns.setNum(symbol.getStackOffset()-1 + symbolTable.getGlobalCount());
+        /// 返回值占据的 slot 数，void为0，其他为1
+        if (symbol.getType() == Type.Void) funcDefIns.setReturn_slots(0);
+        else funcDefIns.setReturn_slots(1);
+        /// 参数占据的 slot 数, args长度
+        funcDefIns.setArg_slots(args.size());
+        /// 局部变量占据的 slot 数
+        funcDefIns.setLoc_slots(symbolTable.getFuncLocCount());
+            //  这个函数分析完了，置0
+        symbolTable.setFuncLocCount(0);
+        /// 指令个数
+        funcDefIns.setBody_count(Analyser.instructions.size()- L_insCount);
+
 
     }
 

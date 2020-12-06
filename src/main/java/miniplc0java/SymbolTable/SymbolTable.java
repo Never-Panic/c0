@@ -14,6 +14,9 @@ public class SymbolTable {
     private int localCount = 0;
     private int globalCount = 0;
 
+    // 用于计算函数里面有几个局部变量, 只有函数结束时才置0
+    private int funcLocCount = 0;
+
     // 全局唯一的层级指针，表示当前分析到的语句在第几层，一开始为-1，即为全局层级
     public static int LEVEL = -1;
 
@@ -54,6 +57,7 @@ public class SymbolTable {
                 // 局部变量
                 symbol.stackOffset = localCount;
                 localCount++;
+                funcLocCount++;
             }
         }
 
@@ -101,4 +105,15 @@ public class SymbolTable {
         }
     }
 
+    public int getGlobalCount() {
+        return globalCount;
+    }
+
+    public int getFuncLocCount() {
+        return funcLocCount;
+    }
+
+    public void setFuncLocCount(int funcLocCount) {
+        this.funcLocCount = funcLocCount;
+    }
 }
