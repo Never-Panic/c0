@@ -22,9 +22,6 @@ public class PrintUtil {
     }
 
     public void print () throws IOException {
-        // todo 二进制？？
-//       long l = Double.doubleToLongBits(-123.312);
-//       System.out.println(Long.toBinaryString(l));
 
 
 
@@ -119,6 +116,13 @@ public class PrintUtil {
             bytes.add((byte) (( target >> ( start - i * 8 )) & 0xFF ));
         }
         return bytes;
+    }
+
+    public static ArrayList<Byte> double2bytes(int length,double target){
+
+        long l = Double.doubleToLongBits(target);
+
+        return (ArrayList<Byte>) long2bytes(length, (int) l);
     }
 
 }

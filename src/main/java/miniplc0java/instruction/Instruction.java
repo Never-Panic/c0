@@ -38,7 +38,13 @@ public class Instruction {
             if (opt == Operation.Push) {
                 // num:u64
                 // todo Double
-                operand = PrintUtil.long2bytes(8, (int) Operand);
+
+                try {
+                    operand = PrintUtil.long2bytes(8, (int) Operand);
+                } catch (Exception e) {
+                    operand = PrintUtil.double2bytes(8, (double) Operand);
+                }
+
             } else if (opt == Operation.PopN) {
                 // num:u32
                 operand = PrintUtil.int2bytes(4, (int) Operand);
