@@ -43,7 +43,13 @@ public final class Analyser {
     public List<Instruction> analyse() throws CompileError {
 
         Program program = new Program(this);
-        program.AnalyseProgram();
+
+        try {
+            program.AnalyseProgram();
+        }catch (Exception e) {
+            System.exit(1);
+        }
+
 
         return instructions;
     }
