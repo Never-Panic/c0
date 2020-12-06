@@ -29,5 +29,13 @@ public enum Operation {
     Br,
     Brtrue,
     Call,
-    Ret
+    Ret,
+    ScanI,
+    ScanF,
+    ScanC,
+    PrintI,
+    PrintF,
+    PrintC,
+    PrintS,
+    Println
 }

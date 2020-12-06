@@ -26,7 +26,6 @@ public class IdentAssignCallExpr extends Expr {
         Token Ident = analyser.expect(TokenType.IDENT);
         SymbolTable symbolTable = SymbolTable.getInstance();
 
-
         // 如果下一个是赋值号，说明可以继续分析为AssignExpr
         if (analyser.peek().getTokenType() == TokenType.ASSIGN) {
 
@@ -59,12 +58,38 @@ public class IdentAssignCallExpr extends Expr {
             return Type.Void;
 
         }
+        // 分析 call expr
         else if (analyser.peek().getTokenType() == TokenType.L_PAREN) {
-            // 分析 call expr
-            analyser.next();
 
             Symbol s = symbolTable.searchFuncSymbol((String)Ident.getValue());
-            if (s==null) throw new AnalyzeError(ErrorCode.NoSuchSymbol, analyser.peek().getStartPos());
+            // 先判断是不是库函数
+            if (((String)Ident.getValue()).equals("getint")) {
+                return AnalyseGetInt();
+            }
+            else if (((String)Ident.getValue()).equals("getdouble")) {
+                return AnalyseGetDouble();
+            }
+            else if (((String)Ident.getValue()).equals("getchar")) {
+                return AnalyseGetChar();
+            }
+            else if (((String)Ident.getValue()).equals("putint")) {
+                return AnalysePutInt();
+            }
+            else if (((String)Ident.getValue()).equals("putdouble")) {
+                return AnalysePutDouble();
+            }
+            else if (((String)Ident.getValue()).equals("putchar")) {
+                return AnalysePutChar();
+            }
+            else if (((String)Ident.getValue()).equals("putstr")) {
+                return AnalysePutStr();
+            }
+            else if (((String)Ident.getValue()).equals("putln")) {
+                return AnalysePutLn();
+            }
+            else if (s==null) throw new AnalyzeError(ErrorCode.NoSuchSymbol, analyser.peek().getStartPos());
+
+            analyser.next();// (
 
             if (analyser.peek().getTokenType() == TokenType.R_PAREN) {
                 analyser.next();
@@ -121,6 +146,80 @@ public class IdentAssignCallExpr extends Expr {
 
             return s.getType();
         }
+    }
+
+    public Type AnalyseGetInt () throws CompileError {
+        analyser.expect(TokenType.L_PAREN);
+        analyser.expect(TokenType.R_PAREN);
+        Analyser.AddInstruction(new Instruction(Operation.ScanI, null));
+        return Type.Int;
+    }
+
+    public Type AnalyseGetDouble () throws CompileError {
+        analyser.expect(TokenType.L_PAREN);
+        analyser.expect(TokenType.R_PAREN);
+        Analyser.AddInstruction(new Instruction(Operation.ScanF, null));
+        return Type.Double;
+    }
+
+    public Type AnalyseGetChar () throws CompileError {
+        analyser.expect(TokenType.L_PAREN);
+        analyser.expect(TokenType.R_PAREN);
+        Analyser.AddInstruction(new Instruction(Operation.ScanC, null));
+        return Type.Int;
+    }
+
+    public Type AnalysePutInt() throws CompileError {
+        analyser.expect(TokenType.L_PAREN);
+        Type exprType = new Expr(analyser).AnalyseExpr();
+        if (exprType != Type.Int) throw new AnalyzeError(ErrorCode.TypeNotMatch, analyser.peek().getStartPos());
+        analyser.expect(TokenType.R_PAREN);
+
+        Analyser.AddInstruction(new Instruction(Operation.PrintI, null));
+
+        return Type.Void;
+    }
+
+    public Type AnalysePutDouble() throws CompileError {
+        analyser.expect(TokenType.L_PAREN);
+        Type exprType = new Expr(analyser).AnalyseExpr();
+        if (exprType != Type.Double) throw new AnalyzeError(ErrorCode.TypeNotMatch, analyser.peek().getStartPos());
+        analyser.expect(TokenType.R_PAREN);
+
+        Analyser.AddInstruction(new Instruction(Operation.PrintF, null));
+
+        return Type.Void;
+    }
+
+    public Type AnalysePutChar() throws CompileError {
+        analyser.expect(TokenType.L_PAREN);
+        Type exprType = new Expr(analyser).AnalyseExpr();
+        if (exprType != Type.Int) throw new AnalyzeError(ErrorCode.TypeNotMatch, analyser.peek().getStartPos());
+        analyser.expect(TokenType.R_PAREN);
+
+        Analyser.AddInstruction(new Instruction(Operation.PrintC, null));
+
+        return Type.Void;
+    }
+
+    public Type AnalysePutStr() throws CompileError {
+        analyser.expect(TokenType.L_PAREN);
+        Type exprType = new Expr(analyser).AnalyseExpr();
+        if (exprType != Type.Int) throw new AnalyzeError(ErrorCode.TypeNotMatch, analyser.peek().getStartPos());
+        analyser.expect(TokenType.R_PAREN);
+
+        Analyser.AddInstruction(new Instruction(Operation.PrintS, null));
+
+        return Type.Void;
+    }
+
+    public Type AnalysePutLn() throws CompileError {
+        analyser.expect(TokenType.L_PAREN);
+        analyser.expect(TokenType.R_PAREN);
+
+        Analyser.AddInstruction(new Instruction(Operation.Println, null));
+
+        return Type.Void;
     }
 
 }
