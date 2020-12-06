@@ -10,5 +10,6 @@ public enum ErrorCode {
     ArgsNotMatch,
     TypeNotMatch,
     UseVoid,
-    CannotDecaleFuncInsideBlock;
+    CannotDecaleFuncInsideBlock,
+    NoMainFunc
 }

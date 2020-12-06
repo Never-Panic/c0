@@ -2,6 +2,7 @@ package miniplc0java.analyser;
 
 import miniplc0java.Expr.Expr;
 import miniplc0java.Function.Function;
+import miniplc0java.Program;
 import miniplc0java.Stmt.Stmt;
 import miniplc0java.SymbolTable.Kind;
 import miniplc0java.SymbolTable.Symbol;
@@ -51,17 +52,10 @@ public final class Analyser {
     }
 
     public List<Instruction> analyse() throws CompileError {
-        // TODO analyse !!!!!!!!!!!
 
-        Stmt s = new Stmt(this);
-        s.AnalyseStmt();
+        Program program = new Program(this);
+        program.AnalyseProgram();
 
-        Function f =new Function(this);
-        f.AnalyseFunction();
-        f.AnalyseFunction();
-        f.AnalyseFunction();
-
-        // analyseProgram();
         return instructions;
     }
 

@@ -73,7 +73,9 @@ public class Function {
         BlockStmt blockStmt = new BlockStmt(analyser);
         blockStmt.AnalyseBlockStmt();
 
-        // todo 回填 FuncDefIns
+
+        // 回填 FuncDefIns
+
         /// 函数名称在全局变量中的位置 = 函数offset - 1 + 全局变量个数
         funcDefIns.setNum(symbol.getStackOffset()-1 + symbolTable.getGlobalCount());
         /// 返回值占据的 slot 数，void为0，其他为1
