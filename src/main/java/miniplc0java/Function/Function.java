@@ -76,6 +76,8 @@ public class Function {
         BlockStmt blockStmt = new BlockStmt(analyser);
         blockStmt.AnalyseBlockStmt();
 
+        // 添加一个ret
+        Analyser.AddInstruction(new Instruction(Operation.Ret, null));
 
 
         // 回填 FuncDefIns

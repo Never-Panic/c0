@@ -84,6 +84,8 @@ public class PrintUtil {
 
 //        System.out.println(SymbolTable.getInstance().getGlobalCount() + SymbolTable.getInstance().getFuncCount() -1);
 //        System.out.println(SymbolTable.getInstance().searchGlobal());
+//        System.out.println(SymbolTable.getInstance().getFuncCount()-1);
+//
 //        for (Instruction instruction : Analyser.instructions) {
 //            printStream.println(instruction.toString());
 //        }
