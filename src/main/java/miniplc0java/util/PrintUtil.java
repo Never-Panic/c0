@@ -35,7 +35,7 @@ public class PrintUtil {
 
         /// 输出全局变量
         //globals.count
-        List<Byte> globalCount=int2bytes(4, SymbolTable.getInstance().getGlobalCount());
+        List<Byte> globalCount=int2bytes(4, SymbolTable.getInstance().getGlobalCount() + SymbolTable.getInstance().getFuncCount()-1);
         bytes.addAll(globalCount);
 
         //globals
@@ -82,7 +82,7 @@ public class PrintUtil {
         printStream.write(result);
 
 
-//        System.out.println(SymbolTable.getInstance().getGlobalCount());
+//        System.out.println(SymbolTable.getInstance().getGlobalCount() + SymbolTable.getInstance().getFuncCount() -1);
 //        System.out.println(SymbolTable.getInstance().searchGlobal());
 //        for (Instruction instruction : Analyser.instructions) {
 //            printStream.println(instruction.toString());

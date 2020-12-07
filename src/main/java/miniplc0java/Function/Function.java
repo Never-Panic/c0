@@ -70,11 +70,13 @@ public class Function {
 
        // symbolTable.addSymbol(symbol);
 
+        symbolTable.addSymbol(symbol);
+        symbol.setValue(symbol.getName());
+
         BlockStmt blockStmt = new BlockStmt(analyser);
         blockStmt.AnalyseBlockStmt();
 
-        symbolTable.addSymbol(symbol);
-        symbol.setValue(symbol.getName());
+
 
         // 回填 FuncDefIns
 
