@@ -227,8 +227,8 @@ public class Tokenizer {
             } else return new Token(TokenType.DOUBLE_LITERAL, Double.parseDouble(cache.toString()), startPos, it.ptr);
         } else {
             Pos endPos = it.ptr;
-           // return new Token(TokenType.UINT_LITERAL, Integer.parseInt(cache.toString()), startPos, endPos);
-            return new Token(TokenType.UINT_LITERAL, Long.parseLong(cache.toString()), startPos, endPos);
+            return new Token(TokenType.UINT_LITERAL, Integer.parseInt(cache.toString()), startPos, endPos);
+            //return new Token(TokenType.UINT_LITERAL, Long.parseLong(cache.toString()), startPos, endPos);
         }
 
     }

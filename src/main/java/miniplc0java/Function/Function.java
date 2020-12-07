@@ -27,7 +27,6 @@ public class Function {
     }
 
 
-    // TODO void函数无return也可以生成ret命令；
     public void AnalyseFunction () throws CompileError {
         SymbolTable symbolTable = SymbolTable.getInstance();
         FuncDefIns funcDefIns = new FuncDefIns();

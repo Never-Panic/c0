@@ -52,7 +52,7 @@ public class PrintUtil {
 
             if (global.getValue() == null) {
                 globalValueCount = int2bytes(4, 8);
-                globalValueItem = long2bytes(8,0L);
+                globalValueItem = long2bytes(8,0);
             } else {
                 globalValueItem = String2bytes(global.getValue());
                 globalValueCount = int2bytes(4, globalValueItem.size());
@@ -102,7 +102,7 @@ public class PrintUtil {
         return AB;
     }
 
-    public static List<Byte> long2bytes(int length, long target) {
+    public static List<Byte> long2bytes(int length, int target) {
         ArrayList<Byte> bytes = new ArrayList<>();
         int start = 8 * (length-1);
         for(int i = 0 ; i < length; i++){
