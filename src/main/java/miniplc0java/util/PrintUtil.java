@@ -124,7 +124,7 @@ public class PrintUtil {
 
         long l = Double.doubleToLongBits(target);
 
-        return (ArrayList<Byte>) long2bytes(length, (int) l);
+        return (ArrayList<Byte>) long2bytes(length, l);
     }
 
 }
