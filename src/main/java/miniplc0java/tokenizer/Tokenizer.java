@@ -96,28 +96,30 @@ public class Tokenizer {
         while (it.peekChar() != '\"') {
 
             if (it.peekChar() == '\\') {
+
                 it.nextChar();
                 char peek = it.peekChar();
 
                 if (peek=='\\') {
-                    cache.append('\\');
+                    cache.append("\\\\");
                     it.nextChar();
                 } else if (peek=='\"') {
-                    cache.append('\"');
+                    cache.append("\\\"");
                     it.nextChar();
                 } else if (peek=='\'') {
-                    cache.append('\'');
+                    cache.append("\\\'");
                     it.nextChar();
                 } else if (peek=='n') {
-                    cache.append('\n');
+                    cache.append("\\\n");
                     it.nextChar();
                 } else if (peek=='t') {
-                    cache.append('\t');
+                    cache.append("\\\t");
                     it.nextChar();
                 } else if (peek=='r') {
-                    cache.append('\r');
+                    cache.append("\\\r");
                     it.nextChar();
                 } else throw new TokenizeError(ErrorCode.InvalidInput, it.previousPos());
+
             } else if (!(it.peekChar()=='\r'||it.peekChar()=='\t'||it.peekChar()=='\n')){
                 cache.append(it.peekChar());
                 it.nextChar();
@@ -129,6 +131,50 @@ public class Tokenizer {
         it.nextChar();//read the last "
         return new Token(TokenType.STRING_LITERAL, cache.toString(), startPos, it.ptr);
     }
+
+//    private Token lexString() throws TokenizeError {
+//        // 可以为空字符串
+//        StringBuilder cache = new StringBuilder();
+//        Pos startPos = it.ptr;
+//
+//        it.nextChar();//read the first "
+//
+//        while (it.peekChar() != '\"') {
+//
+//            if (it.peekChar() == '\\') {
+//                it.nextChar();
+//                char peek = it.peekChar();
+//
+//                if (peek=='\\') {
+//                    cache.append('\\');
+//                    it.nextChar();
+//                } else if (peek=='\"') {
+//                    cache.append('\"');
+//                    it.nextChar();
+//                } else if (peek=='\'') {
+//                    cache.append('\'');
+//                    it.nextChar();
+//                } else if (peek=='n') {
+//                    cache.append('\n');
+//                    it.nextChar();
+//                } else if (peek=='t') {
+//                    cache.append('\t');
+//                    it.nextChar();
+//                } else if (peek=='r') {
+//                    cache.append('\r');
+//                    it.nextChar();
+//                } else throw new TokenizeError(ErrorCode.InvalidInput, it.previousPos());
+//            } else if (!(it.peekChar()=='\r'||it.peekChar()=='\t'||it.peekChar()=='\n')){
+//                cache.append(it.peekChar());
+//                it.nextChar();
+//            }
+//            else throw new TokenizeError(ErrorCode.InvalidInput, it.previousPos());  // 是\r \t \n
+//        }
+//
+//        if (it.peekChar()!='\"') throw new TokenizeError(ErrorCode.InvalidInput, it.previousPos());
+//        it.nextChar();//read the last "
+//        return new Token(TokenType.STRING_LITERAL, cache.toString(), startPos, it.ptr);
+//    }
 
     private Token lexNum() throws TokenizeError {
 
