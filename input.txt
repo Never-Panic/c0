@@ -1,23 +1,22 @@
-let x:int = 1+1;
-
-fn ss() -> void {
-    "ad";
-    return;
+fn fib(x: int) -> int {
+    if x<=1 {
+        return 1;
+    }
+    let result: int = 2;
+    result = 2;
+    return result;
 }
 
-fn ss2() -> void {
-    "dddd";
-    "asd";
-    "dddd";
-    return;
-}
-fn main() -> void {
-    "asdasd";
-    "asdasdas";
-    return ;
-}
-
-fn ss3() -> void {
-    "asd";
-    return;
+fn main() -> int {
+    let i: int = 0;
+    let j: int;
+    j = getint();
+    while i < j {
+        putint(i);
+        putchar(32);
+        putint(fib(i));
+        putln();
+        i = i + 1;
+    }
+    return 0;
 }

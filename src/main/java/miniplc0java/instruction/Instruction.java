@@ -1,5 +1,6 @@
 package miniplc0java.instruction;
 
+import miniplc0java.Stmt.Jump;
 import miniplc0java.analyser.Analyser;
 import miniplc0java.util.PrintUtil;
 
@@ -62,7 +63,7 @@ public class Instruction {
                 operand = PrintUtil.int2bytes(4, (int) Operand);
             } else if (opt == Operation.Br) {
                 // off:i32
-                operand = PrintUtil.int2bytes(4, (int) Operand);
+                operand = PrintUtil.int2bytes(4, ((Jump) Operand).getJumpNum());
             } else if (opt == Operation.Brtrue) {
                 // off:i32
                 operand = PrintUtil.int2bytes(4, (int) Operand);

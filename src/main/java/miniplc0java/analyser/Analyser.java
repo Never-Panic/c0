@@ -44,12 +44,7 @@ public final class Analyser {
 
         Program program = new Program(this);
 
-        try {
-            program.AnalyseProgram();
-        }catch (Exception e) {
-            System.exit(1);
-        }
-
+        program.AnalyseProgram();
 
         return instructions;
     }

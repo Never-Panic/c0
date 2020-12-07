@@ -96,6 +96,8 @@ public class App {
             // analyze
             var analyzer = new Analyser(tokenizer);
             List<Instruction> instructions;
+
+
             try {
                 instructions = analyzer.analyse();
             } catch (Exception e) {
