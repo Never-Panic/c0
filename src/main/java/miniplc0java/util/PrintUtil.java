@@ -82,13 +82,13 @@ public class PrintUtil {
         printStream.write(result);
 
 
-//        System.out.println(SymbolTable.getInstance().getGlobalCount() + SymbolTable.getInstance().getFuncCount() -1);
-//        System.out.println(SymbolTable.getInstance().searchGlobal());
-//        System.out.println(SymbolTable.getInstance().getFuncCount()-1);
-//
-//        for (Instruction instruction : Analyser.instructions) {
-//            printStream.println(instruction.toString());
-//        }
+        System.out.println(SymbolTable.getInstance().getGlobalCount() + SymbolTable.getInstance().getFuncCount() -1);
+        System.out.println(SymbolTable.getInstance().searchGlobal());
+        System.out.println(SymbolTable.getInstance().getFuncCount()-1);
+
+        for (Instruction instruction : Analyser.instructions) {
+            System.out.println(instruction.toString());
+        }
 
     }
 
