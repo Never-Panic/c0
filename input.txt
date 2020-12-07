@@ -1,8 +1,7 @@
-let x:int = 1;
-
-fn main() -> int {
+fn main() -> void {
     
     putstr("helloworld");
+    putln();
     
-    return 0;
+    return;
 }

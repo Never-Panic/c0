@@ -72,6 +72,7 @@ public class Function {
 
         symbolTable.addSymbol(symbol);
         symbol.setValue(symbol.getName());
+        symbol.setConstant(true);
 
         BlockStmt blockStmt = new BlockStmt(analyser);
         blockStmt.AnalyseBlockStmt();

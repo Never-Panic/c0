@@ -85,6 +85,7 @@ public class Program {
         // 最后再来填全局变量_start, 添加到符号表
         Symbol symbol = new Symbol("_start", Kind.Func, Type.Void, -1);
         symbol.setValue("_start");
+        symbol.setConstant(true);
         symbolTable.addSymbol(symbol);
 
 
