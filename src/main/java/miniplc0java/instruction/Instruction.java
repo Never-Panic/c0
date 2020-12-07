@@ -43,7 +43,14 @@ public class Instruction {
                 try {
                     operand = PrintUtil.long2bytes(8, (int) Operand);
                 } catch (Exception e) {
-                    operand = PrintUtil.double2bytes(8, (double) Operand);
+
+
+                    if (Operand.getClass() == Long.class) {
+                        operand = PrintUtil.long2bytes(8, (long) Operand);
+                    } else {
+                        operand = PrintUtil.double2bytes(8, (double) Operand);
+                    }
+
                 }
 
             } else if (opt == Operation.PopN) {
